@@ -1,0 +1,227 @@
+Question,Answer
+What is MindShift?,MindShift is an AI education platform built for students. It offers structured courses with real video lessons and articles along with expert tutoring and progress tracking all in one place.
+Who created MindShift?,"MindShift was created by three co-founders: Jotin Samayamantri (Lead Developer), Arnav Sahoo (Product Lead), and Aarit Choudhary (Content Lead). They built it to make AI education more accessible to students."
+What does MindShift do?,MindShift helps students learn AI through structured courses with videos and articles and quizzes. It also provides expert tutoring sessions and tracks progress with achievements and a leaderboard.
+Is MindShift free?,Yes MindShift is free to sign up. All 8 courses and platform features are available at no cost.
+How many courses does MindShift have?,MindShift currently has 8 full AI courses covering topics from AI Fundamentals to Reinforcement Learning. Each course includes video lessons and article content and quizzes.
+What courses are available on MindShift?,"The 8 courses are AI Fundamentals, Machine Learning Fundamentals, Deep Learning, Natural Language Processing, Computer Vision, AI Ethics and Responsible AI, Python for AI, and Reinforcement Learning."
+What is the AI Fundamentals course about?,AI Fundamentals covers what AI is and how it works including types of AI and the differences between AI and machine learning and deep learning. It is a beginner-level course with about 12 hours of content.
+What is the Machine Learning Fundamentals course about?,Machine Learning Fundamentals teaches core ML concepts like supervised vs unsupervised learning and classification vs regression and model evaluation. It is a beginner-level course with about 24 hours of content.
+What is the Deep Learning course about?,The Deep Learning course covers neural network architecture and training processes including backpropagation and CNNs and RNNs and transformers. It is an intermediate-level course with about 32 hours of content.
+What is the NLP course about?,Natural Language Processing covers text processing and tokenization and embeddings and transformer models like BERT. It is an intermediate-level course with about 20 hours of content.
+What is the Computer Vision course about?,Computer Vision teaches image processing and CNNs and object detection and segmentation using tools like OpenCV. It is an intermediate-level course with about 22 hours of content.
+What is the AI Ethics course about?,AI Ethics and Responsible AI covers fairness and bias and transparency and the NIST AI Risk Management Framework. It is a beginner-level course with about 10 hours of content.
+What is the Python for AI course about?,Python for AI teaches Python data workflows including NumPy and Pandas and Scikit-learn for machine learning. It is a beginner-level course with about 15 hours of content.
+What is the Reinforcement Learning course about?,Reinforcement Learning covers agents and environments and rewards and Q-learning and deep RL applications. It is an advanced-level course with about 28 hours of content.
+What difficulty levels are available?,Courses come in three levels: Beginner and Intermediate and Advanced. You can filter courses by level on the courses page.
+Which courses are beginner level?,"AI Fundamentals, Machine Learning Fundamentals, AI Ethics and Responsible AI, and Python for AI are all beginner-level courses."
+Which courses are intermediate level?,"Deep Learning, Natural Language Processing, and Computer Vision are intermediate-level courses."
+Which courses are advanced level?,Reinforcement Learning is the advanced-level course on MindShift.
+How do I start a course?,Go to the Courses page and click Start Course on any course card. You will be automatically enrolled and taken to the course detail page where you can begin the first lesson.
+Do I need to enroll in a course?,No. Just click Start Course and you are automatically enrolled. There is no separate enrollment step.
+How do I continue a course I already started?,Go to the Courses page or your Dashboard and click Continue on any course you have started. You will be taken to where you left off.
+What does a course include?,"Each course has 4 content units plus a mastery quiz. Units contain video lessons and article lessons and a unit check-in quiz. There are also downloadable materials like PDFs and lecture notes."
+What types of lessons are there?,There are three types of lessons: video lessons with embedded YouTube content and article lessons with written educational content and quiz lessons that test your understanding.
+How do video lessons work?,Video lessons embed real YouTube videos directly in the platform. You watch the video and then click Mark as Complete to track your progress and earn XP.
+How do article lessons work?,Article lessons display educational content directly on the page with clear formatting. You read the content and then click Mark as Complete when you are done.
+How do quizzes work?,Quizzes present one question at a time with four answer choices. After you submit an answer you get immediate feedback showing whether you were right or wrong along with an explanation and the source.
+How many questions are in a quiz?,Unit check-in quizzes have 4 questions each. The final mastery quiz for each course has 8 questions.
+Can I retake a quiz?,Yes. After completing a quiz you will see a Retake Quiz button next to the Complete Quiz button. You can retake any quiz as many times as you want.
+What happens when I complete a lesson?,When you complete a lesson you earn 25 XP and your course progress bar updates. The lesson gets a green checkmark in the sidebar.
+What happens when I complete a course?,When you complete all lessons and the mastery quiz your course shows a trophy icon on the Courses page and a Completed badge on your Dashboard.
+What are downloadable materials?,Each course includes links to real external resources like lecture notes and textbooks and cheat sheets and GitHub repos. These open in a new tab.
+Where do I find downloadable materials?,Downloadable materials appear in the left sidebar of the course detail page below the lesson list.
+Are the course resources real?,Yes. All videos are real YouTube content from sources like MIT and Stanford and freeCodeCamp. Articles reference IBM and Google and other credible sources. Downloads link to real PDFs and repos.
+How is my course progress calculated?,Progress is based on the percentage of lessons you have completed out of the total lessons in the course including the quizzes.
+Can I take multiple courses at the same time?,Yes. You can enroll in and work on as many courses as you want simultaneously. All active courses show on your Dashboard.
+How do I sign up for MindShift?,Click Sign Up on the landing page. Enter a username and email and password. Your account is created instantly and you can log in right away.
+What are the username requirements?,Usernames must be 3 to 24 characters long and can only contain letters and numbers and underscores.
+What are the password requirements?,Passwords must be between 8 and 128 characters long.
+Can I change my username?,Yes. Go to Settings and click Edit Profile. Enter a new username and it will be updated across the platform.
+Can I change my profile picture?,Yes. Click your avatar in the top right corner to open the profile menu. Click the camera icon on your avatar to upload a new photo. It updates everywhere including the leaderboard.
+How do I log in?,Go to the login page and enter your email and password. Your email is not case-sensitive.
+How do I log out?,Click your avatar in the top right corner and select Sign Out. You can also use the Sign Out button at the bottom of the sidebar.
+Where does Sign Out take me?,Signing out redirects you to the landing page.
+What is the Dashboard?,The Dashboard is your home base. It shows your stat cards and active courses and upcoming sessions and recent activity and achievements and friend activity.
+What do the Dashboard stat cards show?,The four stat cards show Courses In Progress and Total Learning Time in hours and Achievements Earned out of total and your Current Streak in days.
+What is the learning streak?,Your streak counts consecutive days you have completed at least one learning activity. It resets if you miss a day.
+How do I see my course progress on the Dashboard?,All your enrolled courses appear in the Your Courses section with progress bars. Completed courses show a trophy icon and green border.
+What is the Recent Activity section?,Recent Activity shows your latest actions like completing lessons and earning achievements and booking sessions with timestamps.
+What is the Friends Activity section?,Friends Activity shows what your friends have been doing on MindShift like completing courses and earning achievements.
+What is the Schedule page?,The Schedule page lets you book tutoring and group study sessions. It has a weekly calendar view and a list view.
+How do I book a session?,Click Book Session on the Schedule page. Follow the 5-step wizard: choose session type then select tutor or group then pick a date then pick a time then confirm.
+What types of sessions can I book?,You can book two types: 1-on-1 Tutoring with a specific tutor or Group Study sessions with other students.
+How does the booking wizard work?,Step 1 choose Tutoring or Group Study. Step 2 select a tutor or group session. Step 3 pick a date from the calendar. Step 4 pick an available time slot. Step 5 review and confirm.
+What do the calendar colors mean?,On the booking calendar green dots mean multiple slots available and yellow dots mean limited availability and gray means unavailable.
+Can I see booked sessions on the calendar?,Yes. After booking a session it appears on both the weekly calendar view and the list view immediately.
+How do I cancel a session?,Click on any event in the calendar or list view. In the detail popup click Cancel. The session is removed immediately.
+How do I reschedule a session?,Click on an event and select Reschedule. The old session is cancelled and the booking wizard opens at the date selection step so you can pick a new date and time.
+Can I switch between calendar and list view?,Yes. Use the Week and List toggle buttons at the top of the Schedule page. On mobile only the list view is shown.
+What are the filter options on the Schedule?,You can filter by All or Tutoring or Group Study to show only the session types you want.
+What is the Tutors page?,The Tutors page shows profiles of expert AI tutors with their specializations and ratings and session counts.
+How many tutors are available?,There are 6 tutors available covering specializations like Machine Learning and Deep Learning and NLP and Computer Vision and Python and AI Ethics.
+Who are the tutors?,"The tutors are Dr. Sarah Chen from Stanford and Prof. James Liu from MIT and Dr. Aisha Patel from Google DeepMind and Maria Garcia from Tableau and Dr. Michael Torres from Harvard and Dr. Kevin Park from OpenAI."
+How do I book a tutor from the Tutors page?,Click Book Session on any tutor card. The booking wizard skips steps 1 and 2 and goes directly to date selection since you already chose the tutor.
+Can I filter tutors?,Yes. You can search by name or filter by specialization like Machine Learning or NLP and by availability like Available Today or This Week.
+What are Achievements?,Achievements are milestones you unlock by completing actions on the platform. They start at zero and you earn them through real activity like completing lessons and maintaining streaks.
+How many achievements are there?,There are 18 achievements across four categories: Learning and Community and Streaks and Mastery.
+What are the achievement categories?,"Learning achievements are for completing lessons and enrolling in courses. Community is for attending sessions. Streaks are for consistent daily learning. Mastery is for completing courses and scoring high on quizzes."
+How do I earn achievements?,Achievements unlock automatically when you meet the criteria. For example completing your first lesson earns First Steps and a 7-day streak earns Consistent.
+What XP do achievements give?,"Achievements give different amounts of XP. First Steps gives 50 XP, Course Complete gives 300 XP, and Scholar (complete 5 courses) gives 1000 XP."
+Can I see my progress toward locked achievements?,Yes. Locked achievements show a progress bar indicating how close you are to unlocking them.
+What is the leveling system?,"Your XP determines your level. Levels go from Beginner (Level 1) through Explorer, Learner, Apprentice, Scholar, Expert, Sage, to Master (Level 8) at 5000+ XP."
+How do I earn XP?,You earn XP by completing lessons (25 XP) and enrolling in courses (10 XP) and booking sessions (15 XP) and completing courses (200 XP) and unlocking achievements (varies).
+What is the Leaderboard?,The Leaderboard shows you and your friends ranked by XP. It displays up to 5 people total including yourself.
+How does the Leaderboard work?,The board shows you plus up to 4 friends sorted by XP from highest to lowest. Your row is highlighted so you can easily find your position.
+How many friends can I add?,You can add up to 4 friends for a maximum of 5 people on your leaderboard including yourself.
+How do I add a friend?,Click Add Friend on the Leaderboard page. Search for users and click Add next to their name. They appear on your leaderboard immediately.
+How do I remove a friend?,On the Leaderboard page find the friend in the Friends section and click Remove. They are removed from your board instantly.
+What happens when I reach the friend limit?,The Add Friend button becomes disabled and shows a tooltip saying Maximum 4 friends. Remove a friend first to add a new one.
+What is the Settings page?,Settings lets you customize your MindShift experience including appearance and text size and notification preferences and account management.
+How do I enable dark mode?,Toggle the Dark Mode switch in Settings or click the moon icon in the top right of any page. It applies across the entire platform immediately.
+How do I change text size?,Use the text size slider in Settings. It ranges from 14px to 22px and updates all text across the platform in real time.
+What is high contrast mode?,High contrast mode increases the contrast between text and backgrounds for better readability. Toggle it in Settings under Appearance.
+Do settings save automatically?,Yes. All settings save automatically when you change them. There is no save button needed.
+What notification settings are available?,"You can toggle Session Reminders and Achievement Alerts and Leaderboard Updates independently. Each persists to the server."
+How do notifications work?,Click the bell icon in the top right to open the notification panel. It shows recent notifications like achievements earned and sessions booked and level ups. You can mark individual ones or all as read.
+How do I reset all my progress?,Go to Settings and scroll to the Danger Zone. Click Erase All Progress. This clears all courses and lessons and achievements and sessions and resets your XP and level to zero.
+How do I reset settings to defaults?,In Settings under the Danger Zone click Reset All Settings. This resets theme and text size and notification preferences to their defaults.
+Can I delete my account?,The delete account feature is available in Settings under Danger Zone but is currently in demo mode only.
+How do I change my profile picture?,Click your avatar in the top right corner. In the dropdown click the camera icon overlay on your avatar photo. Select an image file and it updates everywhere.
+Where does my profile picture appear?,Your profile picture appears in the top right avatar and in the profile dropdown and on the leaderboard next to your name and rank.
+What is the About Us page?,The About Us page shows MindShift's vision and mission and introduces the three founders with their photos and roles.
+What is MindShift's vision?,A world where every student has the tools and guidance and community to confidently learn and apply AI.
+What is MindShift's mission?,"To make AI education structured and accessible and supported through expert-led courses and personalized tutoring and a learning community that meets students where they are."
+How do I contact the MindShift team?,Go to the Contact Us page and fill out the form with your name and email and category and subject and message. Categories include General Inquiry and Bug Report and Feature Request and Account Issue and Feedback.
+Does the contact form actually send messages?,The contact form validates all fields and shows a success state with confirmation. It is designed to look and feel fully functional.
+What is the FAQ section on the Contact page?,"The Contact page has a Quick Help section with expandable FAQ items covering common questions like resetting passwords and booking tutors and tracking progress."
+Is MindShift responsive?,Yes. The entire platform adapts smoothly across desktop and tablet and mobile screen widths. Layouts reorganize and the sidebar collapses on smaller screens.
+Does MindShift support accessibility?,Yes. MindShift supports dark mode and adjustable text size and high contrast mode and keyboard navigation and screen reader compatibility and visible focus states.
+What browsers does MindShift work on?,MindShift works on modern browsers including Chrome and Firefox and Safari and Edge. It uses standard HTML and CSS and JavaScript.
+How do I navigate the platform?,Use the sidebar on the left to switch between Dashboard and Courses and Schedule and Tutors and Achievements and Leaderboard and About Us and Contact Us and Settings.
+What does the sidebar contain?,"The sidebar has three sections: Learn (Dashboard, Courses, Schedule, Tutors), Progress (Achievements, Leaderboard), and More (About Us, Contact Us, Settings). Sign Out is at the bottom."
+Can I use MindShift on mobile?,Yes. On mobile the sidebar collapses and can be opened with the hamburger menu. All pages are fully responsive and touch-friendly.
+What happens when I click the MindShift logo?,When logged in clicking the logo takes you to the Dashboard. On the landing page it stays on the landing page.
+What is on the landing page?,The landing page shows what MindShift offers with a hero section and feature highlights and a metrics strip and a how-it-works section and a call-to-action to sign up.
+Can I access courses without logging in?,No. The landing page only shows About Us and Contact Us and Login/Sign Up. You must log in to access courses and tutoring and all other features.
+What is the visual motif on the landing page?,The landing page uses a connected learning path motif with small dots and dashed lines representing a skill tree. It appears as subtle decorative accents throughout the page.
+What is the product preview on the landing page?,The hero section shows a mini mockup of the course detail view with a sidebar showing modules and checkmarks and a progress bar and a lesson title to give visitors a preview of the learning experience.
+How does the how-it-works section explain MindShift?,"Three steps connected by a milestone path: Pick a course, Learn and practice, See your growth. Each step has a brief description."
+What metrics does the landing page show?,The landing page shows 2400+ Students and 8 Courses and 120+ Tutors and 95% Satisfaction Rate in a compact metrics strip.
+What is the course detail page?,The course detail page is where you actually learn. It has a left sidebar with the lesson list and a main content area showing the current lesson.
+How does the course sidebar work?,The sidebar shows all modules and lessons with checkmarks for completed ones and a blue highlight for the active lesson. Your overall progress bar is at the top.
+Can I jump between lessons?,Yes. Click any lesson in the sidebar to load it. You do not have to go in order though completing them sequentially is recommended.
+What happens after I answer a quiz question?,You see whether you were correct or incorrect along with the correct answer highlighted and an explanation of why that answer is right and a source citation.
+What sources are cited in quizzes?,"Quiz feedback cites real sources like IBM What Is Artificial Intelligence and Google Machine Learning Crash Course and NIST AI RMF and Stanford CS231n."
+What is the mastery quiz?,The mastery quiz is the final assessment for each course with 8 questions covering all units. Completing it along with all lessons marks the course as finished.
+Do I need to pass the quiz to complete the course?,No. The quiz is for learning not gatekeeping. You can complete it regardless of your score and retake it anytime.
+What is a unit check-in quiz?,Each of the 4 content units ends with a 4-question check-in quiz to test your understanding of that unit before moving on.
+How many quizzes total are in each course?,Each course has 4 unit check-in quizzes with 4 questions each and 1 mastery quiz with 8 questions for a total of 5 quizzes and 24 questions per course.
+How many total quiz questions are across all courses?,Across all 8 courses there are 192 quiz questions total: 128 unit quiz questions and 64 mastery quiz questions.
+What does the weekly calendar view show?,The weekly calendar shows a grid with days across the top and time slots down the side. Booked sessions appear as colored blocks at their scheduled times.
+What do the colors mean on the calendar events?,Blue left border means Tutoring session. Yellow left border means Group Study session.
+How big are the calendar event boxes?,Calendar event boxes are at least 76px tall with readable text sizes and 10px padding for clear spacing.
+What information shows on a calendar event?,Each event box shows the session title and the time or tutor name and a type badge showing Tutoring or Group Study.
+What is the list view on the Schedule?,The list view shows all sessions as cards grouped by day with date and time and title and type badge and instructor and status and action buttons.
+What is the difference between Tutoring and Group Study?,Tutoring is a 1-on-1 session with a specific expert tutor. Group Study is a collaborative session where multiple students learn together.
+How does the tutor booking flow differ from the schedule booking?,When you book from the Tutors page the wizard skips the first two steps since you already selected a tutor. You go straight to picking a date then time then confirming.
+What specializations do the tutors cover?,"Tutors cover Machine Learning, Neural Networks, Deep Learning, Python, Reinforcement Learning, NLP, Transformers, AI Ethics, Data Visualization, Computer Vision, and MLOps."
+What information is on a tutor card?,"Each tutor card shows their avatar and name and title and organization and specialization badges and star rating and review count and number of sessions completed and a brief bio and availability."
+How does the star rating work for tutors?,Tutors have ratings from 4.5 to 4.9 stars based on review counts ranging from 64 to 147 reviews. The ratings are displayed with filled yellow stars.
+What organizations are the tutors from?,"Tutors are from Stanford AI Lab, MIT, Google DeepMind, Tableau, Harvard Berkman Klein Center, and OpenAI."
+What is XP?,XP stands for experience points. You earn XP by completing activities on MindShift and it determines your level and leaderboard rank.
+How much XP do different actions give?,"Completing a lesson gives 25 XP. Enrolling in a course gives 10 XP. Booking a session gives 15 XP. Completing a course gives 200 XP. Achievements give 50 to 1000 XP depending on difficulty."
+What are the XP thresholds for each level?,"Beginner 0-99 XP, Explorer 100-399 XP, Learner 400-799 XP, Apprentice 800-1499 XP, Scholar 1500-2499 XP, Expert 2500-3499 XP, Sage 3500-4999 XP, Master 5000+ XP."
+What level am I when I start?,You start at Level 1 Beginner with 0 XP. Your first lesson completion gives you 25 XP plus the First Steps achievement gives 50 XP for a total of 75 XP.
+Do I get notified when I level up?,Yes. When you reach a new level you get a notification saying Level Up along with your new level name and number.
+What is the First Steps achievement?,First Steps is earned by completing your first lesson. It gives 50 XP and is usually the first achievement a new user unlocks.
+What is the Quick Learner achievement?,Quick Learner is earned by completing 5 lessons. It gives 100 XP.
+What is the Bookworm achievement?,Bookworm is earned by completing 20 lessons. It gives 200 XP.
+What is the Explorer achievement?,Explorer is earned by enrolling in 3 courses. It gives 100 XP.
+What is the Course Complete achievement?,Course Complete is earned by finishing your first course including all lessons and the mastery quiz. It gives 300 XP.
+What is the Scholar achievement?,Scholar is earned by completing 5 courses. It gives 1000 XP and is one of the hardest achievements to earn.
+What is the Consistent achievement?,Consistent is earned by maintaining a 7-day learning streak. It gives 150 XP.
+What is the Unstoppable achievement?,Unstoppable is earned by maintaining a 30-day learning streak. It gives 500 XP.
+What is the Team Player achievement?,Team Player is earned by attending 3 tutoring sessions. It gives 100 XP.
+What is the Helping Hand achievement?,Helping Hand is earned by attending 10 sessions. It gives 150 XP.
+What is the Deep Diver achievement?,Deep Diver is earned by completing an advanced course. It gives 500 XP.
+What is the Perfectionist achievement?,Perfectionist is earned by scoring 100 percent on 5 quizzes. It gives 300 XP.
+What is the Social Butterfly achievement?,Social Butterfly is earned by adding 5 friends. It gives 150 XP. Note that the current friend limit is 4 so this achievement requires a future update.
+What is the Marathon achievement?,Marathon is earned by having a 3-hour learning session. It gives 150 XP.
+What is the Early Bird achievement?,Early Bird is earned by completing a lesson before 8 AM. It gives 50 XP.
+What is the Discussion Leader achievement?,Discussion Leader is earned by attending 3 group study sessions. It gives 200 XP.
+What is the Mentor achievement?,Mentor is earned by helping 10 students. It gives 300 XP.
+How does dark mode look?,Dark mode changes the background to a deep navy and surfaces to dark blue and text to light gray. All components adapt including cards and buttons and charts and the sidebar.
+Does dark mode persist across pages?,Yes. Dark mode is saved to both the server and localStorage so it persists when you navigate between pages and when you return later.
+What keyboard shortcuts are available?,MindShift supports keyboard navigation including tab to move between elements and escape to close modals and panels and enter to activate buttons and links.
+Can I use a screen reader with MindShift?,Yes. The platform uses semantic HTML with ARIA labels and roles and proper heading hierarchy to support screen readers.
+What happens if I forget my password?,On the login page there is a Forgot Password link. The password reset feature uses email verification with a 24-hour token expiry.
+Is my password secure?,Yes. Passwords are hashed with bcrypt using 10 rounds of salting. They are never stored in plain text. The login system also uses timing-safe comparisons to prevent enumeration attacks.
+What happens after too many failed login attempts?,After 5 failed login attempts your account is locked for 15 minutes. This prevents brute force attacks.
+Is there rate limiting?,Yes. Login is limited to 10 attempts per 15 minutes and signup to 5 per 15 minutes and verification resend to 3 per 15 minutes per IP address.
+How are sessions managed?,Sessions use JWT tokens with 7-day expiry stored in httpOnly cookies. JavaScript cannot access the session cookie directly for security.
+What is the shared device protection?,When you log in a sessionStorage flag is set. If someone opens a new tab without this flag an automatic session check runs. This prevents access on shared devices like school computers.
+What values does MindShift stand for?,"MindShift stands for Accessible Learning (meeting students where they are), Expert Guidance (access to mentors), Real Progress (measurable learning), and Student-First Design (features serve the learner)."
+What makes MindShift different from other platforms?,MindShift combines structured courses with real resources and expert tutoring and a full achievement and leveling system and friend-based leaderboard in one platform specifically designed for students.
+Can I use MindShift for school?,Yes. MindShift is designed for students and covers AI topics that are relevant to academic learning and career preparation. The courses include real academic resources from universities.
+What technology is MindShift built with?,MindShift is built with HTML and CSS and JavaScript on the frontend and Node.js with Express on the backend and SQLite for the database. It uses JWT for authentication and bcrypt for password security.
+Is MindShift a real product?,MindShift is a fully functional web application built for the FBLA Website Design competition. All features work end-to-end with a real database and authentication system.
+How do I report a bug?,Go to the Contact Us page and select Bug Report from the category dropdown. Describe the issue in detail and submit the form.
+How do I request a feature?,Go to the Contact Us page and select Feature Request from the category dropdown. Describe what you would like to see added.
+How do I give feedback?,Go to the Contact Us page and select Feedback from the category dropdown. Share your thoughts about the platform.
+What is FBLA?,FBLA stands for Future Business Leaders of America. It is a student organization that hosts competitive events including Website Design.
+What is the FBLA Website Design event?,Website Design is an FBLA competitive event where teams design and develop a website for a given topic. MindShift was built for this competition.
+How long does a typical course take?,Course durations range from 10 hours for AI Ethics to 32 hours for Deep Learning. Most courses take between 12 and 24 hours to complete.
+Can I skip lessons in a course?,Yes. You can click any lesson in the sidebar to jump to it. However completing them in order is recommended for the best learning experience.
+What happens to my data if I reset progress?,Resetting progress permanently deletes all course enrollments and completed lessons and achievements and scheduled sessions and activity log and notifications. Your XP resets to 0 and your level goes back to Beginner.
+Can I undo a progress reset?,No. Resetting progress is permanent and cannot be undone. Make sure you want to start fresh before using this option.
+How do I view all my achievements?,Click Achievements in the sidebar. The page shows all 18 achievements organized by category with earned ones highlighted and locked ones showing progress bars.
+Can I filter achievements by category?,Yes. Use the category tabs at the top of the Achievements page to filter by All or Learning or Community or Streaks or Mastery.
+What does the level progression bar show?,The level progression bar at the bottom of the Achievements page shows your current XP and how much more you need to reach the next level.
+How do I know which achievement I am close to earning?,Locked achievements show a progress percentage bar. For example if Consistent requires a 7-day streak and you have a 3-day streak it shows about 43 percent progress.
+Are there any hidden achievements?,No. All 18 achievements are visible from the start. Locked ones show their requirements so you always know what to work toward.
+What happens when I earn an achievement?,You receive a notification saying Achievement Unlocked with the achievement name and XP earned. The achievement card on the Achievements page updates to show it as earned with the date.
+How does the calendar handle different time zones?,The calendar displays times as shown in the booking wizard. Times are displayed in the format used during booking such as 2:00 PM or 10:00 AM.
+Can I book multiple sessions on the same day?,Yes. You can book as many sessions as there are available time slots on any given day.
+What time slots are available for booking?,Available time slots typically include 9:00 AM and 10:00 AM and 2:00 PM and 3:00 PM and 4:00 PM. Unavailable slots like 11:00 AM and 1:00 PM are grayed out.
+How long are tutoring sessions?,Tutoring sessions are 1 hour long by default. The end time is automatically calculated when you pick a start time.
+Can I add notes when booking a session?,Yes. Step 5 of the booking wizard includes an optional notes text area where you can add any information about what you want to cover.
+What does the Join Session button do?,Clicking Join Session on an event shows a toast notification saying Joining session. In a full production version this would connect to a video call.
+How do I see past sessions?,Past sessions remain in your schedule list. The status shows whether they were completed or cancelled.
+What is the toast notification?,Toast notifications are small popup messages that appear at the bottom right of the screen confirming actions like Session booked or Achievement unlocked or Settings saved.
+How long do toast notifications last?,Toast notifications appear for about 2.5 seconds before automatically fading away.
+Can I see my learning time breakdown?,Your total learning time is shown on the Dashboard stat cards in hours. Each lesson completion adds approximately 15 minutes to your total.
+How is learning time calculated?,Learning time is estimated at 15 minutes per lesson completed. This accumulates across all courses and is displayed on your Dashboard.
+What browser features does MindShift use?,MindShift uses modern browser features including CSS custom properties for theming and IntersectionObserver for scroll animations and localStorage for settings persistence and fetch API for server communication.
+Does MindShift work offline?,No. MindShift requires an internet connection to communicate with the server for authentication and data persistence and loading course content.
+Can multiple people use the same account?,While technically possible it is not recommended. MindShift has shared device protection that may trigger automatic logout when multiple tabs detect different session states.
+What is the maximum username length?,Usernames can be up to 24 characters long. The minimum is 3 characters.
+What characters are allowed in usernames?,Usernames can contain letters (uppercase and lowercase) and numbers and underscores. No spaces or special characters are allowed.
+Is my email case-sensitive?,No. Emails are normalized to lowercase before being stored and checked. So User@Email.com and user@email.com are treated as the same account.
+Can two users have the same email?,No. Each email address can only be associated with one account. Attempting to sign up with an already registered email shows a generic error to prevent account enumeration.
+Can two users have the same username?,No. Usernames must be unique. If you try to register with a taken username you will see an error message.
+What is account enumeration protection?,MindShift uses generic error messages like An account with these credentials already exists instead of specifying whether the email or username is the duplicate. This prevents attackers from discovering which accounts exist.
+What fonts does MindShift use?,MindShift uses the Inter font family loaded from Google Fonts with weights 400 and 500 and 600 and 700 and 800 for different text styles.
+What is the color scheme?,MindShift uses a blue-based color scheme with a deep navy primary color and bright action blue for buttons and links and neutral grays for text and borders. Green is used for success states and red for errors.
+How do animations work on MindShift?,MindShift uses CSS animations for entrance effects (fadeInUp) and hover states (translateY lift) and button press feedback (scale) and smooth transitions on all interactive elements. Animations respect the prefers-reduced-motion setting.
+What is the node-path visual motif?,The landing page uses a recurring visual motif of connected dots resembling a learning path or skill tree. It appears as subtle decorative accents on section corners and card backgrounds.
+How does the product mockup on the landing page work?,The hero section shows a mini HTML/CSS mockup of the course detail view with a sidebar showing modules and a progress bar. It has a slight rotation and floating animation for visual depth.
+What accessibility standards does MindShift follow?,MindShift uses semantic HTML with proper heading hierarchy and ARIA labels and roles and focus-visible outlines and sufficient color contrast and keyboard navigability and reduced motion support.
+Can I print pages from MindShift?,Yes. MindShift includes print styles that hide the sidebar and topbar and navigation elements so the main content prints cleanly.
+What happens if my session expires?,If your JWT session expires after 7 days you will be redirected to the login page automatically. You can log in again to continue where you left off since all progress is saved.
+Is my progress saved if I close the browser?,Yes. All progress is saved to the server database. When you log back in your courses and achievements and settings and everything else will be exactly as you left them.
+How do I navigate back to the Dashboard?,Click Dashboard in the sidebar or click the MindShift logo at the top of the sidebar. Both take you to your Dashboard.
+What is at the bottom of the sidebar?,The bottom of the sidebar has a Sign Out button that logs you out and redirects to the landing page.
+How does the mobile sidebar work?,On mobile screens the sidebar is hidden by default. Tap the hamburger menu icon in the top left to slide it open. Tap outside or press Escape to close it.
+What is the topbar?,The topbar is the horizontal bar at the top of every app page. It contains the mobile menu toggle and dark mode button and notification bell and your profile avatar.
+What is in the profile dropdown?,The profile dropdown shows your avatar with a camera icon to change your photo and your username and email and links to Settings and Sign Out.
+How do I get to Settings from the topbar?,Click your avatar in the top right to open the profile dropdown then click Settings.
+Can I see how many unread notifications I have?,Yes. If you have unread notifications a small red dot appears on the bell icon in the topbar. The number updates in real time.
+What types of notifications does MindShift send?,"MindShift sends notifications for welcome messages, course enrollments, lesson completions, achievement unlocks, level ups, session bookings, and system messages like progress resets."
+How do I mark a single notification as read?,Click on any notification in the dropdown panel. The background highlight disappears indicating it has been read.
+How do I mark all notifications as read?,Click the Mark all read button at the top of the notification panel. All notifications lose their unread highlight and the red badge disappears.
+What is the landing page navbar?,The landing page navbar shows the MindShift logo and About Us and Contact Us links and Log In and Sign Up buttons. Courses and other features are hidden until login.
+Why can I not see courses on the landing page?,Courses and other app features are restricted to logged-in users. The landing page only shows public pages like About Us and Contact Us to prevent unauthorized access.
+What is the About Us page layout?,The About Us page has a header with vision and mission cards side by side then founder photos in a row then value cards in a grid and a call-to-action at the bottom.
+Can I access About Us and Contact Us when logged in?,Yes. Both pages are in the sidebar under the More section. When accessed from the sidebar they show with the full app layout including sidebar and topbar. When accessed from the landing page they show with the public navbar.
+How does the dual-mode navigation work for About and Contact?,These pages detect a URL parameter. When accessed from the sidebar with app=1 they show the sidebar layout. When accessed from the landing page without the parameter they show the public navbar with Log In and Sign Up.

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | MindShift</title>
+  <meta name="description" content="Learn about MindShift's mission, founders, and values. We're building accessible AI education for every student.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="../css/design-system.css">
+
+  <!-- Page-specific styles -->
+  <style>
+    /* ---- Page Header ---- */
+    .about-header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto var(--space-10);
+    }
+
+    .about-header h1 {
+      font-size: var(--text-4xl);
+      font-weight: var(--weight-extrabold);
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-3);
+      background: linear-gradient(135deg, var(--color-text-primary) 0%, var(--color-action-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .about-header p {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      max-width: none;
+      line-height: var(--leading-relaxed);
+    }
+
+    /* ---- Section Titles ---- */
+    .section-title {
+      font-size: var(--text-2xl);
+      font-weight: var(--weight-bold);
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-6);
+      text-align: center;
+    }
+
+    .about-section {
+      margin-bottom: var(--space-12);
+    }
+
+    /* ---- Vision & Mission Cards ---- */
+    .vision-mission-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+    }
+
+    .vm-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      text-align: center;
+      transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+    }
+
+    .vm-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-action-blue);
+    }
+
+    .vm-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-5);
+      transition: transform var(--transition-spring);
+    }
+
+    .vm-card:hover .vm-icon {
+      transform: scale(1.1);
+    }
+
+    .vm-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .vm-icon-blue {
+      background: var(--color-accent-blue);
+      color: var(--color-action-blue);
+    }
+
+    .vm-icon-green {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+
+    .vm-card h3 {
+      font-size: var(--text-xl);
+      font-weight: var(--weight-bold);
+      margin-bottom: var(--space-3);
+    }
+
+    .vm-card p {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      max-width: none;
+    }
+
+    /* ---- Our Story ---- */
+    .story-content {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .story-content p {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-5);
+      max-width: none;
+    }
+
+    .story-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ---- Founders ---- */
+    .founders-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+
+    .founder-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8) var(--space-6);
+      text-align: center;
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .founder-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .founder-avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-xl);
+      font-weight: var(--weight-bold);
+      overflow: hidden;
+      margin: 0 auto var(--space-5);
+      transition: transform var(--transition-spring), box-shadow var(--transition-base);
+    }
+
+    .founder-card:hover .founder-avatar {
+      transform: scale(1.08);
+      box-shadow: var(--shadow-md);
+    }
+
+    .founder-avatar-blue {
+      background: var(--color-accent-blue);
+      color: var(--color-deep-blue);
+    }
+
+    .founder-avatar-green {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+
+    .founder-avatar-purple {
+      background: rgba(139, 92, 246, 0.12);
+      color: #8B5CF6;
+    }
+
+    [data-theme="dark"] .founder-avatar-purple {
+      background: rgba(139, 92, 246, 0.15);
+      color: #A78BFA;
+    }
+
+    .founder-card h4 {
+      font-size: var(--text-lg);
+      font-weight: var(--weight-bold);
+      margin-bottom: var(--space-1);
+    }
+
+    .founder-role {
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      color: var(--color-action-blue);
+      margin-bottom: var(--space-3);
+    }
+
+    .founder-bio {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      max-width: none;
+    }
+
+    /* ---- Values ---- */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+    }
+
+    .value-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-align: center;
+      transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+    }
+
+    .value-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-action-blue);
+    }
+
+    .value-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-4);
+      background: var(--color-accent-blue);
+      color: var(--color-action-blue);
+      transition: transform var(--transition-spring);
+    }
+
+    .value-card:hover .value-icon {
+      transform: scale(1.15);
+    }
+
+    .value-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .value-card h4 {
+      font-size: var(--text-md);
+      font-weight: var(--weight-semibold);
+      margin-bottom: var(--space-2);
+    }
+
+    .value-card p {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      max-width: none;
+    }
+
+    /* ---- CTA Section ---- */
+    .cta-section {
+      text-align: center;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-10) var(--space-8);
+    }
+
+    .cta-section h2 {
+      font-size: var(--text-2xl);
+      font-weight: var(--weight-bold);
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-5);
+    }
+
+    /* ---- Entrance Animations ---- */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    [data-animate].animate-in {
+      animation: fadeInUp 0.5s var(--ease-out) both;
+    }
+
+    [data-animate="delay-1"].animate-in { animation-delay: 0.05s; }
+    [data-animate="delay-2"].animate-in { animation-delay: 0.1s; }
+    [data-animate="delay-3"].animate-in { animation-delay: 0.15s; }
+    [data-animate="delay-4"].animate-in { animation-delay: 0.2s; }
+    [data-animate="delay-5"].animate-in { animation-delay: 0.25s; }
+    [data-animate="delay-6"].animate-in { animation-delay: 0.3s; }
+    [data-animate="delay-7"].animate-in { animation-delay: 0.35s; }
+    [data-animate="delay-8"].animate-in { animation-delay: 0.4s; }
+    [data-animate="delay-9"].animate-in { animation-delay: 0.45s; }
+    [data-animate="delay-10"].animate-in { animation-delay: 0.5s; }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 1024px) {
+      .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .about-header h1 {
+        font-size: var(--text-3xl);
+      }
+
+      .vision-mission-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .founders-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .values-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .cta-section {
+        padding: var(--space-8) var(--space-6);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .about-header h1 {
+        font-size: var(--text-2xl);
+      }
+
+      .vm-card {
+        padding: var(--space-6);
+      }
+
+      .founder-card {
+        padding: var(--space-6) var(--space-5);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-container"></div>
+
+  <main id="main-content" role="main">
+
+      <!-- ======================== Page Header ======================== -->
+      <section class="about-header" data-animate aria-label="Page header">
+        <h1>About MindShift</h1>
+        <p>Our mission to make AI education accessible to every student</p>
+      </section>
+
+      <!-- ======================== Vision & Mission ======================== -->
+      <section class="about-section" aria-label="Vision and Mission">
+        <div class="vision-mission-grid">
+
+          <div class="vm-card" data-animate="delay-1">
+            <div class="vm-icon vm-icon-blue">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+            </div>
+            <h3>Our Vision</h3>
+            <p>A world where every student has the tools, guidance, and community to confidently learn and apply AI.</p>
+          </div>
+
+          <div class="vm-card" data-animate="delay-2">
+            <div class="vm-icon vm-icon-green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            </div>
+            <h3>Our Mission</h3>
+            <p>To make AI education structured, accessible, and supported. We combine expert-led courses, personalized tutoring, and a learning community that meets students where they are.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================== The Founders ======================== -->
+      <section class="about-section" aria-label="Founders">
+        <h2 class="section-title" data-animate="delay-4">The Founders</h2>
+        <div class="founders-grid">
+
+          <article class="founder-card" data-animate="delay-5">
+            <div class="founder-avatar">
+              <img src="../assets/jotin.jpg" alt="Jotin Samayamantri" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <h4>Jotin Samayamantri</h4>
+            <div class="founder-role">Co-Founder &amp; Lead Developer</div>
+            <p class="founder-bio">Leads platform development and design. Focused on using technology to make quality education more accessible to students everywhere.</p>
+          </article>
+
+          <article class="founder-card" data-animate="delay-6">
+            <div class="founder-avatar">
+              <img src="../assets/arnav.jpg" alt="Arnav Sahoo" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <h4>Arnav Sahoo</h4>
+            <div class="founder-role">Co-Founder &amp; Product Lead</div>
+            <p class="founder-bio">Drives product strategy and builds intuitive learning experiences that keep students engaged.</p>
+          </article>
+
+          <article class="founder-card" data-animate="delay-7">
+            <div class="founder-avatar">
+              <img src="../assets/aarit.jpg" alt="Aarit Choudhary" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <h4>Aarit Choudhary</h4>
+            <div class="founder-role">Co-Founder &amp; Content Lead</div>
+            <p class="founder-bio">Curates course content and ensures every resource meets high academic standards. Focused on making lessons clear and practical.</p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ======================== Values ======================== -->
+      <section class="about-section" aria-label="Our Values">
+        <h2 class="section-title" data-animate="delay-5">What We Stand For</h2>
+        <div class="values-grid">
+
+          <div class="value-card" data-animate="delay-6">
+            <div class="value-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <h4>Accessible Learning</h4>
+            <p>Education should meet students where they are, regardless of background.</p>
+          </div>
+
+          <div class="value-card" data-animate="delay-7">
+            <div class="value-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c6 3 10 0 12-1v-4"/></svg>
+            </div>
+            <h4>Expert Guidance</h4>
+            <p>Every learner deserves access to knowledgeable mentors and tutors.</p>
+          </div>
+
+          <div class="value-card" data-animate="delay-8">
+            <div class="value-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <h4>Real Progress</h4>
+            <p>Learning should be measurable, structured, and motivating.</p>
+          </div>
+
+          <div class="value-card" data-animate="delay-9">
+            <div class="value-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <h4>Student-First Design</h4>
+            <p>Every feature exists to serve the learner, not to look impressive.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================== CTA ======================== -->
+      <section class="cta-section" data-animate="delay-10" aria-label="Call to action">
+        <h2>Ready to start learning?</h2>
+        <a href="login.html" class="btn btn-primary btn-lg">Get Started</a>
+      </section>
+
+  </main>
+
+  <!-- Shared JS -->
+  <script src="../js/shared.js"></script>
+  <script>
+    (function() {
+      var isApp = new URLSearchParams(window.location.search).get('app') === '1';
+      var navContainer = document.getElementById('nav-container');
+      var main = document.getElementById('main-content');
+
+      if (isApp) {
+        navContainer.innerHTML = renderSidebar() + renderTopbar('About Us');
+        main.className = 'page-content';
+        main.style.marginLeft = 'var(--sidebar-width)';
+        main.style.marginTop = 'var(--navbar-height)';
+        main.style.padding = 'var(--space-8) var(--space-8) var(--space-12)';
+        document.body.classList.add('has-sidebar');
+        initSidebar();
+      } else {
+        navContainer.innerHTML =
+          '<header class="public-nav" role="banner">' +
+            '<a href="../index.html" class="nav-brand" aria-label="MindShift home">' +
+              '<img src="../assets/logo.png" alt="MindShift" style="height:34px;width:auto;">' +
+              '<span>MindShift</span>' +
+            '</a>' +
+            '<nav aria-label="Main navigation"><ul class="nav-links">' +
+              '<li><a href="about.html">About Us</a></li>' +
+              '<li><a href="contact.html">Contact Us</a></li>' +
+            '</ul></nav>' +
+            '<div class="nav-actions">' +
+              '<a href="login.html" class="btn btn-ghost">Log In</a>' +
+              '<a href="login.html" class="btn btn-primary" style="box-shadow:var(--shadow-blue);">Sign Up</a>' +
+              '<button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>' +
+            '</div>' +
+          '</header>';
+        main.className = 'container';
+        main.style.paddingTop = 'calc(var(--navbar-height) + var(--space-10))';
+        main.style.paddingBottom = 'var(--space-12)';
+      }
+    })();
+  </script>
+</body>
+</html>

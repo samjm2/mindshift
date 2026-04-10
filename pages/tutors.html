@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutors — MindShift</title>
+  <meta name="description" content="Connect with expert AI tutors on MindShift. Personalized one-on-one sessions in Machine Learning, Deep Learning, NLP, Computer Vision, and more.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="../css/design-system.css">
+
+  <!-- Page-specific styles -->
+  <style>
+    /* ---- Filter Bar ---- */
+    .filter-bar {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .filter-bar-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .filter-bar-search {
+      position: relative;
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .filter-bar-search svg {
+      position: absolute;
+      left: var(--space-3);
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--color-text-tertiary);
+      pointer-events: none;
+    }
+
+    .filter-bar-search .input {
+      padding-left: var(--space-10);
+      width: 100%;
+    }
+
+    .filter-bar-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .result-count {
+      font-size: var(--text-sm);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-tertiary);
+      white-space: nowrap;
+    }
+
+    /* ---- Tutor Grid ---- */
+    .tutor-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin-bottom: var(--space-10);
+    }
+
+    /* ---- Tutor Card ---- */
+    .tutor-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+    }
+
+    .tutor-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-border);
+    }
+
+    .tutor-card-top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: var(--space-4);
+    }
+
+    .tutor-card-top .avatar-xl {
+      margin-bottom: var(--space-3);
+    }
+
+    .tutor-name {
+      font-size: var(--text-lg);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: 2px;
+    }
+
+    .tutor-title {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      font-weight: var(--weight-medium);
+    }
+
+    .tutor-org {
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+      margin-top: 2px;
+    }
+
+    /* ---- Specialization Badges ---- */
+    .tutor-specializations {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      justify-content: center;
+      margin-bottom: var(--space-4);
+    }
+
+    .tutor-specializations .badge {
+      transition: transform var(--transition-fast);
+    }
+
+    .tutor-specializations .badge:hover {
+      transform: scale(1.08);
+    }
+
+    /* ---- Rating & Sessions ---- */
+    .tutor-stats {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-5);
+      margin-bottom: var(--space-4);
+    }
+
+    .tutor-rating {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .tutor-rating svg {
+      width: 14px;
+      height: 14px;
+      color: #F59E0B;
+    }
+
+    .tutor-rating-value {
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+    }
+
+    .tutor-rating-count {
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+    }
+
+    .tutor-sessions {
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .tutor-sessions svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    /* ---- Bio ---- */
+    .tutor-bio {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      text-align: center;
+      margin-bottom: var(--space-4);
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      max-width: none;
+    }
+
+    /* ---- Card Divider ---- */
+    .tutor-card-divider {
+      border: none;
+      border-top: 1px solid var(--color-border-light);
+      margin: 0 0 var(--space-4);
+    }
+
+    /* ---- Availability & Rate ---- */
+    .tutor-card-bottom-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-4);
+    }
+
+    .tutor-availability {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--color-success);
+      font-weight: var(--weight-medium);
+    }
+
+    .availability-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: var(--radius-full);
+      background: var(--color-success);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .availability-dot::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: var(--radius-full);
+      border: 2px solid var(--color-success);
+      opacity: 0.3;
+      animation: pulse-ring 2s ease-out infinite;
+    }
+
+    /* ---- Book Button ---- */
+    .tutor-card .btn-book {
+      width: 100%;
+    }
+
+    /* ---- Booking Modal (3-Step Wizard) ---- */
+    .booking-modal .modal {
+      max-width: 520px;
+      position: relative;
+      padding: var(--space-8);
+    }
+
+    .booking-modal-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+    }
+
+    .booking-modal-header .avatar-xl {
+      flex-shrink: 0;
+    }
+
+    .booking-modal-info h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: 2px;
+    }
+
+    .booking-modal-info p {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      max-width: none;
+    }
+
+    /* Step Indicator */
+    .wizard-step-indicator {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+
+    .wizard-step-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      border: 2px solid var(--color-border);
+      color: var(--color-text-tertiary);
+      background: var(--color-surface);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .wizard-step-dot.active {
+      border-color: var(--color-action-blue);
+      background: var(--color-action-blue);
+      color: var(--color-text-inverse);
+    }
+
+    .wizard-step-dot.completed {
+      border-color: var(--color-success);
+      background: var(--color-success);
+      color: var(--color-text-inverse);
+    }
+
+    .wizard-step-line {
+      flex: 1;
+      height: 2px;
+      background: var(--color-border);
+      border-radius: 1px;
+      transition: background 0.3s ease;
+    }
+
+    .wizard-step-line.completed {
+      background: var(--color-success);
+    }
+
+    .wizard-step-label {
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+      font-weight: var(--weight-medium);
+      text-align: center;
+      margin-top: var(--space-1);
+    }
+
+    .wizard-step-label.active {
+      color: var(--color-action-blue);
+    }
+
+    /* Wizard Content */
+    .wizard-step-content {
+      display: none;
+      animation: fadeInUp 0.3s ease;
+    }
+
+    .wizard-step-content.active {
+      display: block;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .wizard-step-title {
+      font-size: var(--text-base);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-4);
+    }
+
+    /* Mini Calendar */
+    .mini-calendar {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: var(--space-4);
+    }
+
+    .mini-calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-accent-blue-light);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .mini-calendar-header h4 {
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+    }
+
+    .mini-calendar-nav {
+      display: flex;
+      gap: var(--space-1);
+    }
+
+    .mini-calendar-nav button {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-surface);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-secondary);
+      transition: all var(--transition-fast);
+    }
+
+    .mini-calendar-nav button:hover {
+      background: var(--color-accent-blue-light);
+      border-color: var(--color-action-blue);
+      color: var(--color-action-blue);
+    }
+
+    .mini-calendar-nav button svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .mini-calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      padding: var(--space-2);
+      gap: 2px;
+    }
+
+    .mini-calendar-day-label {
+      text-align: center;
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-tertiary);
+      padding: var(--space-2) 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .mini-calendar-day {
+      position: relative;
+      text-align: center;
+      padding: var(--space-2) 0;
+      font-size: var(--text-sm);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-secondary);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      min-height: 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mini-calendar-day:hover:not(.unavailable):not(.empty) {
+      background: var(--color-accent-blue-light);
+      color: var(--color-action-blue);
+    }
+
+    .mini-calendar-day.selected {
+      background: var(--color-action-blue);
+      color: var(--color-text-inverse);
+    }
+
+    .mini-calendar-day.selected .cal-dot {
+      background: var(--color-text-inverse);
+    }
+
+    .mini-calendar-day.unavailable {
+      color: var(--color-text-tertiary);
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .mini-calendar-day.empty {
+      cursor: default;
+    }
+
+    .mini-calendar-day.today {
+      font-weight: var(--weight-bold);
+      color: var(--color-action-blue);
+    }
+
+    .mini-calendar-day.today:not(.selected)::before {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: var(--radius-full);
+      background: var(--color-action-blue);
+    }
+
+    .cal-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: var(--radius-full);
+      margin-top: 2px;
+    }
+
+    .cal-dot.green {
+      background: var(--color-success);
+    }
+
+    .cal-dot.yellow {
+      background: var(--color-warning);
+    }
+
+    .cal-dot.gray {
+      background: var(--color-text-tertiary);
+    }
+
+    .calendar-legend {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+      margin-bottom: var(--space-2);
+    }
+
+    .calendar-legend-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+    }
+
+    .calendar-legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: var(--radius-full);
+    }
+
+    .calendar-legend-dot.green {
+      background: var(--color-success);
+    }
+
+    .calendar-legend-dot.yellow {
+      background: var(--color-warning);
+    }
+
+    .calendar-legend-dot.gray {
+      background: var(--color-text-tertiary);
+      opacity: 0.4;
+    }
+
+    /* Time Slots (Step 2) */
+    .time-slots-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .time-slot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--text-sm);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-secondary);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      height: 44px;
+    }
+
+    .time-slot:hover:not(.unavailable) {
+      border-color: var(--color-action-blue);
+      color: var(--color-action-blue);
+      background: var(--color-accent-blue-light);
+    }
+
+    .time-slot.selected {
+      background: var(--color-action-blue);
+      color: var(--color-text-inverse);
+      border-color: var(--color-action-blue);
+      box-shadow: var(--shadow-blue);
+    }
+
+    .time-slot.unavailable {
+      background: var(--color-bg);
+      color: var(--color-text-tertiary);
+      cursor: not-allowed;
+      opacity: 0.5;
+      text-decoration: line-through;
+    }
+
+    .time-slot:active:not(.unavailable) {
+      transform: scale(0.95);
+    }
+
+    /* Summary (Step 3) */
+    .booking-summary {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-5);
+    }
+
+    .booking-summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-2) 0;
+    }
+
+    .booking-summary-row + .booking-summary-row {
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    .booking-summary-label {
+      font-size: var(--text-sm);
+      color: var(--color-text-tertiary);
+      font-weight: var(--weight-medium);
+    }
+
+    .booking-summary-value {
+      font-size: var(--text-sm);
+      color: var(--color-text-primary);
+      font-weight: var(--weight-semibold);
+    }
+
+    .booking-summary-tutor {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
+      margin-bottom: var(--space-2);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .booking-summary-tutor .avatar {
+      flex-shrink: 0;
+    }
+
+    .booking-summary-tutor-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .booking-summary-tutor-name {
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+    }
+
+    .booking-summary-tutor-spec {
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+    }
+
+    .booking-notes-group {
+      margin-bottom: var(--space-5);
+    }
+
+    .booking-notes-group label {
+      font-size: var(--text-sm);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+      display: block;
+    }
+
+    .booking-notes {
+      min-height: 80px;
+    }
+
+    /* Wizard Navigation */
+    .wizard-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-top: var(--space-5);
+    }
+
+    .wizard-nav .btn-back {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--text-sm);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-secondary);
+      background: none;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .wizard-nav .btn-back:hover {
+      border-color: var(--color-text-secondary);
+      color: var(--color-text-primary);
+      background: var(--color-bg);
+    }
+
+    .wizard-nav .btn-back svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .wizard-nav .btn-next {
+      margin-left: auto;
+    }
+
+    /* ---- How Booking Works ---- */
+    .booking-section {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+    }
+
+    .booking-section-title {
+      font-size: var(--text-xl);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      text-align: center;
+      margin-bottom: var(--space-8);
+    }
+
+    .booking-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-8);
+    }
+
+    .booking-step {
+      text-align: center;
+    }
+
+    .booking-step-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-full);
+      background: var(--color-accent-blue);
+      color: var(--color-action-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-4);
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .booking-step-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .booking-step:hover .booking-step-icon {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-blue);
+    }
+
+    .booking-step-number {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-bold);
+      color: var(--color-action-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-2);
+    }
+
+    .booking-step h4 {
+      font-size: var(--text-base);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .booking-step p {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      max-width: 28ch;
+      margin: 0 auto;
+    }
+
+    /* ---- Toast ---- */
+    .toast-notification {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 10000;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 1024px) {
+      .tutor-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .tutor-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-bar-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .filter-bar-search {
+        min-width: 0;
+      }
+
+      .filter-bar-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .booking-steps {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+      }
+
+      .booking-section {
+        padding: var(--space-6);
+      }
+
+      .time-slots-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .booking-modal .modal {
+        padding: var(--space-6);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .tutor-card {
+        padding: var(--space-4);
+      }
+
+      .tutor-stats {
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .tutor-card-bottom-info {
+        flex-direction: column;
+        gap: var(--space-2);
+        align-items: flex-start;
+      }
+
+      .time-slots-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="sidebar-container"></div>
+  <div id="topbar-container"></div>
+
+  <div class="page-layout">
+    <main class="page-content" role="main">
+
+      <!-- Page Header -->
+      <section class="page-header" data-animate aria-label="Page header">
+        <h1>Expert Tutors</h1>
+        <p>Connect with AI professionals for personalized guidance</p>
+      </section>
+
+      <!-- Filter Bar -->
+      <section class="filter-bar" data-animate aria-label="Filter tutors">
+        <div class="filter-bar-row">
+          <div class="filter-bar-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" class="input" id="tutor-search" placeholder="Search tutors by name or specialty..." aria-label="Search tutors">
+          </div>
+        </div>
+        <div class="filter-group" id="specialization-filter" role="group" aria-label="Specialization filter">
+          <button class="filter-chip active" type="button" data-filter="all">All</button>
+          <button class="filter-chip" type="button" data-filter="ml">ML</button>
+          <button class="filter-chip" type="button" data-filter="deep-learning">Deep Learning</button>
+          <button class="filter-chip" type="button" data-filter="nlp">NLP</button>
+          <button class="filter-chip" type="button" data-filter="cv">CV</button>
+          <button class="filter-chip" type="button" data-filter="python">Python</button>
+          <button class="filter-chip" type="button" data-filter="ai-ethics">AI Ethics</button>
+        </div>
+        <div class="filter-bar-bottom">
+          <div class="filter-group" id="availability-filter" role="group" aria-label="Availability filter">
+            <button class="filter-chip active" type="button" data-avail="all">All</button>
+            <button class="filter-chip" type="button" data-avail="today">Available Today</button>
+            <button class="filter-chip" type="button" data-avail="week">This Week</button>
+          </div>
+          <span class="result-count" id="result-count">6 tutors available</span>
+        </div>
+      </section>
+
+      <!-- Tutor Grid -->
+      <section class="tutor-grid" aria-label="Tutor listings">
+
+        <!-- Tutor 1: Dr. Sarah Chen -->
+        <article class="tutor-card" data-animate
+                 data-name="Dr. Sarah Chen"
+                 data-specializations="ml,deep-learning"
+                 data-availability="week"
+                 data-initials="SC"
+                 data-title="AI Research Scientist"
+                 data-org="Stanford AI Lab">
+          <div class="tutor-card-top">
+            <div class="avatar avatar-xl" aria-hidden="true">SC</div>
+            <h4 class="tutor-name">Dr. Sarah Chen</h4>
+            <span class="tutor-title">AI Research Scientist</span>
+            <span class="tutor-org">Stanford AI Lab</span>
+          </div>
+          <div class="tutor-specializations">
+            <span class="badge badge-blue">Machine Learning</span>
+            <span class="badge badge-blue">Neural Networks</span>
+            <span class="badge badge-blue">Deep Learning</span>
+          </div>
+          <div class="tutor-stats">
+            <div class="tutor-rating">
+              <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span class="tutor-rating-value">4.9</span>
+              <span class="tutor-rating-count">(147 reviews)</span>
+            </div>
+            <div class="tutor-sessions">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+              312 sessions
+            </div>
+          </div>
+          <p class="tutor-bio">Makes complex ML concepts accessible to students at all levels. Published researcher with 10+ years of teaching experience.</p>
+          <hr class="tutor-card-divider">
+          <div class="tutor-card-bottom-info">
+            <span class="tutor-availability">
+              <span class="availability-dot" aria-hidden="true"></span>
+              Available tomorrow 2 PM
+            </span>
+          </div>
+          <button class="btn btn-primary btn-book" type="button" onclick="openBookingModal(this)">Book Session</button>
+        </article>
+
+        <!-- Tutor 2: Prof. James Liu -->
+        <article class="tutor-card" data-animate
+                 data-name="Prof. James Liu"
+                 data-specializations="python,deep-learning"
+                 data-availability="week"
+                 data-initials="JL"
+                 data-title="Computer Science Professor"
+                 data-org="MIT">
+          <div class="tutor-card-top">
+            <div class="avatar avatar-xl" aria-hidden="true">JL</div>
+            <h4 class="tutor-name">Prof. James Liu</h4>
+            <span class="tutor-title">Computer Science Professor</span>
+            <span class="tutor-org">MIT</span>
+          </div>
+          <div class="tutor-specializations">
+            <span class="badge badge-blue">Python</span>
+            <span class="badge badge-blue">Deep Learning</span>
+            <span class="badge badge-blue">Reinforcement Learning</span>
+          </div>
+          <div class="tutor-stats">
+            <div class="tutor-rating">
+              <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span class="tutor-rating-value">4.8</span>
+              <span class="tutor-rating-count">(98 reviews)</span>
+            </div>
+            <div class="tutor-sessions">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+              203 sessions
+            </div>
+          </div>
+          <p class="tutor-bio">Academic rigor with industry experience. Expert in Python-based AI development and reinforcement learning research.</p>
+          <hr class="tutor-card-divider">
+          <div class="tutor-card-bottom-info">
+            <span class="tutor-availability">
+              <span class="availability-dot" aria-hidden="true"></span>
+              Available Thu 2 PM
+            </span>
+          </div>
+          <button class="btn btn-primary btn-book" type="button" onclick="openBookingModal(this)">Book Session</button>
+        </article>
+
+        <!-- Tutor 3: Dr. Aisha Patel -->
+        <article class="tutor-card" data-animate
+                 data-name="Dr. Aisha Patel"
+                 data-specializations="nlp,ai-ethics"
+                 data-availability="today"
+                 data-initials="AP"
+                 data-title="NLP Engineer"
+                 data-org="Google DeepMind">
+          <div class="tutor-card-top">
+            <div class="avatar avatar-xl" aria-hidden="true">AP</div>
+            <h4 class="tutor-name">Dr. Aisha Patel</h4>
+            <span class="tutor-title">NLP Engineer</span>
+            <span class="tutor-org">Google DeepMind</span>
+          </div>
+          <div class="tutor-specializations">
+            <span class="badge badge-blue">NLP</span>
+            <span class="badge badge-blue">Transformers</span>
+            <span class="badge badge-blue">AI Ethics</span>
+          </div>
+          <div class="tutor-stats">
+            <div class="tutor-rating">
+              <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span class="tutor-rating-value">4.8</span>
+              <span class="tutor-rating-count">(112 reviews)</span>
+            </div>
+            <div class="tutor-sessions">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+              245 sessions
+            </div>
+          </div>
+          <p class="tutor-bio">Transformer architecture expert. Passionate about ethical AI development and making NLP accessible to all learners.</p>
+          <hr class="tutor-card-divider">
+          <div class="tutor-card-bottom-info">
+            <span class="tutor-availability">
+              <span class="availability-dot" aria-hidden="true"></span>
+              Available today 4 PM
+            </span>
+          </div>
+          <button class="btn btn-primary btn-book" type="button" onclick="openBookingModal(this)">Book Session</button>
+        </article>
+
+        <!-- Tutor 4: Maria Garcia -->
+        <article class="tutor-card" data-animate
+                 data-name="Maria Garcia"
+                 data-specializations="cv,python"
+                 data-availability="week"
+                 data-initials="MG"
+                 data-title="Data Visualization Specialist"
+                 data-org="Tableau">
+          <div class="tutor-card-top">
+            <div class="avatar avatar-xl" aria-hidden="true">MG</div>
+            <h4 class="tutor-name">Maria Garcia</h4>
+            <span class="tutor-title">Data Visualization Specialist</span>
+            <span class="tutor-org">Tableau</span>
+          </div>
+          <div class="tutor-specializations">
+            <span class="badge badge-blue">Data Visualization</span>
+            <span class="badge badge-blue">Computer Vision</span>
+            <span class="badge badge-blue">Python</span>
+          </div>
+          <div class="tutor-stats">
+            <div class="tutor-rating">
+              <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span class="tutor-rating-value">4.7</span>
+              <span class="tutor-rating-count">(89 reviews)</span>
+            </div>
+            <div class="tutor-sessions">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+              178 sessions
+            </div>
+          </div>
+          <p class="tutor-bio">Visual approaches to understanding data and AI models. Makes complex topics intuitive through interactive visualization.</p>
+          <hr class="tutor-card-divider">
+          <div class="tutor-card-bottom-info">
+            <span class="tutor-availability">
+              <span class="availability-dot" aria-hidden="true"></span>
+              Available Wed 11 AM
+            </span>
+          </div>
+          <button class="btn btn-primary btn-book" type="button" onclick="openBookingModal(this)">Book Session</button>
+        </article>
+
+        <!-- Tutor 5: Dr. Michael Torres -->
+        <article class="tutor-card" data-animate
+                 data-name="Dr. Michael Torres"
+                 data-specializations="ai-ethics,ml"
+                 data-availability="week"
+                 data-initials="MT"
+                 data-title="AI Ethics Researcher"
+                 data-org="Harvard">
+          <div class="tutor-card-top">
+            <div class="avatar avatar-xl" aria-hidden="true">MT</div>
+            <h4 class="tutor-name">Dr. Michael Torres</h4>
+            <span class="tutor-title">AI Ethics Researcher</span>
+            <span class="tutor-org">Harvard</span>
+          </div>
+          <div class="tutor-specializations">
+            <span class="badge badge-blue">AI Ethics</span>
+            <span class="badge badge-blue">Machine Learning</span>
+            <span class="badge badge-blue">Policy</span>
+          </div>
+          <div class="tutor-stats">
+            <div class="tutor-rating">
+              <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span class="tutor-rating-value">4.9</span>
+              <span class="tutor-rating-count">(76 reviews)</span>
+            </div>
+            <div class="tutor-sessions">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+              134 sessions
+            </div>
+          </div>
+          <p class="tutor-bio">Bridges technical AI and societal impact. Ideal for students exploring responsible AI development and policy.</p>
+          <hr class="tutor-card-divider">
+          <div class="tutor-card-bottom-info">
+            <span class="tutor-availability">
+              <span class="availability-dot" aria-hidden="true"></span>
+              Available Fri 10 AM
+            </span>
+          </div>
+          <button class="btn btn-primary btn-book" type="button" onclick="openBookingModal(this)">Book Session</button>
+        </article>
+
+        <!-- Tutor 6: Dr. Kevin Park -->
+        <article class="tutor-card" data-animate
+                 data-name="Dr. Kevin Park"
+                 data-specializations="ml,python"
+                 data-availability="week"
+                 data-initials="KP"
+                 data-title="ML Ops Engineer"
+                 data-org="OpenAI">
+          <div class="tutor-card-top">
+            <div class="avatar avatar-xl" aria-hidden="true">KP</div>
+            <h4 class="tutor-name">Dr. Kevin Park</h4>
+            <span class="tutor-title">ML Ops Engineer</span>
+            <span class="tutor-org">OpenAI</span>
+          </div>
+          <div class="tutor-specializations">
+            <span class="badge badge-blue">Machine Learning</span>
+            <span class="badge badge-blue">MLOps</span>
+            <span class="badge badge-blue">Python</span>
+          </div>
+          <div class="tutor-stats">
+            <div class="tutor-rating">
+              <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span class="tutor-rating-value">4.6</span>
+              <span class="tutor-rating-count">(64 reviews)</span>
+            </div>
+            <div class="tutor-sessions">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+              98 sessions
+            </div>
+          </div>
+          <p class="tutor-bio">Practical ML deployment and real-world AI workflows. Helps students go from prototype to production.</p>
+          <hr class="tutor-card-divider">
+          <div class="tutor-card-bottom-info">
+            <span class="tutor-availability">
+              <span class="availability-dot" aria-hidden="true"></span>
+              Available next Mon
+            </span>
+          </div>
+          <button class="btn btn-primary btn-book" type="button" onclick="openBookingModal(this)">Book Session</button>
+        </article>
+
+      </section>
+
+      <!-- How Booking Works -->
+      <section class="booking-section" data-animate aria-label="How booking works">
+        <h2 class="booking-section-title">How Booking Works</h2>
+        <div class="booking-steps">
+          <div class="booking-step" data-animate>
+            <div class="booking-step-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div class="booking-step-number">Step 1</div>
+            <h4>Choose a Date</h4>
+            <p>Pick an available date from the calendar</p>
+          </div>
+          <div class="booking-step" data-animate>
+            <div class="booking-step-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="booking-step-number">Step 2</div>
+            <h4>Select a Time</h4>
+            <p>Choose from open time slots</p>
+          </div>
+          <div class="booking-step" data-animate>
+            <div class="booking-step-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="booking-step-number">Step 3</div>
+            <h4>Confirm & Join</h4>
+            <p>Review your booking and confirm</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Booking Modal (3-Step Wizard) -->
+  <div class="modal-overlay booking-modal" id="booking-modal" role="dialog" aria-modal="true" aria-label="Book a session">
+    <div class="modal">
+      <button class="modal-close" id="modal-close-btn" aria-label="Close modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <!-- Modal Header with Tutor Info -->
+      <div class="booking-modal-header">
+        <div class="avatar avatar-xl" id="modal-avatar" aria-hidden="true"></div>
+        <div class="booking-modal-info">
+          <h3 id="modal-tutor-name"></h3>
+          <p id="modal-tutor-detail"></p>
+        </div>
+      </div>
+
+      <!-- Step Indicator -->
+      <div class="wizard-step-indicator">
+        <div class="wizard-step-dot active" data-step="1">1</div>
+        <div class="wizard-step-line" data-line="1"></div>
+        <div class="wizard-step-dot" data-step="2">2</div>
+        <div class="wizard-step-line" data-line="2"></div>
+        <div class="wizard-step-dot" data-step="3">3</div>
+      </div>
+      <div style="text-align:center; margin-bottom: var(--space-4);">
+        <span class="wizard-step-label active" id="wizard-step-text">Step 1 of 3 — Pick a Date</span>
+      </div>
+
+      <!-- STEP 1: Pick a Date -->
+      <div class="wizard-step-content active" id="wizard-step-1">
+        <div class="wizard-step-title">Book a session with <span id="step1-tutor-name"></span></div>
+
+        <div class="mini-calendar" id="mini-calendar">
+          <div class="mini-calendar-header">
+            <h4 id="calendar-month-label">March 2026</h4>
+            <div class="mini-calendar-nav">
+              <button type="button" id="cal-prev" aria-label="Previous month">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button type="button" id="cal-next" aria-label="Next month">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="mini-calendar-grid" id="calendar-grid">
+            <!-- Generated by JS -->
+          </div>
+        </div>
+
+        <div class="calendar-legend">
+          <div class="calendar-legend-item">
+            <span class="calendar-legend-dot green"></span> Available
+          </div>
+          <div class="calendar-legend-item">
+            <span class="calendar-legend-dot yellow"></span> Limited
+          </div>
+          <div class="calendar-legend-item">
+            <span class="calendar-legend-dot gray"></span> Unavailable
+          </div>
+        </div>
+
+        <div class="wizard-nav">
+          <div></div>
+          <button class="btn btn-primary btn-next" type="button" id="step1-next" disabled>Next: Pick a Time</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Pick a Time -->
+      <div class="wizard-step-content" id="wizard-step-2">
+        <div class="wizard-step-title">Select a time on <span id="step2-selected-date"></span></div>
+
+        <div class="time-slots-grid" id="time-slots-grid">
+          <!-- Generated by JS -->
+        </div>
+
+        <div class="wizard-nav">
+          <button class="btn-back" type="button" id="step2-back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Back
+          </button>
+          <button class="btn btn-primary btn-next" type="button" id="step2-next" disabled>Next: Review</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Summary & Confirm -->
+      <div class="wizard-step-content" id="wizard-step-3">
+        <div class="wizard-step-title">Booking Summary</div>
+
+        <div class="booking-summary">
+          <div class="booking-summary-tutor">
+            <div class="avatar" id="summary-avatar" aria-hidden="true"></div>
+            <div class="booking-summary-tutor-info">
+              <span class="booking-summary-tutor-name" id="summary-tutor-name"></span>
+              <span class="booking-summary-tutor-spec" id="summary-tutor-spec"></span>
+            </div>
+          </div>
+          <div class="booking-summary-row">
+            <span class="booking-summary-label">Date</span>
+            <span class="booking-summary-value" id="summary-date"></span>
+          </div>
+          <div class="booking-summary-row">
+            <span class="booking-summary-label">Time</span>
+            <span class="booking-summary-value" id="summary-time"></span>
+          </div>
+        </div>
+
+        <div class="booking-notes-group">
+          <label for="booking-notes">Notes (optional)</label>
+          <textarea class="textarea booking-notes" id="booking-notes" placeholder="What topics would you like to cover?" aria-label="Session notes"></textarea>
+        </div>
+
+        <div class="wizard-nav">
+          <button class="btn-back" type="button" id="step3-back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Back
+          </button>
+          <button class="btn btn-primary btn-next" type="button" id="confirm-booking-btn" style="min-width: 160px;">Confirm Booking</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Shared JS -->
+  <script src="../js/api.js"></script>
+  <script src="../js/shared.js"></script>
+  <script>
+    /* ---- Auth Guard ---- */
+    (async function() { await requireLogin(); })();
+
+    /* ---- Render Sidebar & Topbar ---- */
+    document.getElementById('sidebar-container').innerHTML = renderSidebar();
+    document.getElementById('topbar-container').innerHTML = renderTopbar('Tutors');
+    initSidebar();
+
+    /* ======================================================
+       3-Step Booking Wizard
+       ====================================================== */
+
+    const modal = document.getElementById('booking-modal');
+    const closeBtn = document.getElementById('modal-close-btn');
+    const modalAvatar = document.getElementById('modal-avatar');
+    const modalName = document.getElementById('modal-tutor-name');
+    const modalDetail = document.getElementById('modal-tutor-detail');
+    const step1TutorName = document.getElementById('step1-tutor-name');
+    const calendarGrid = document.getElementById('calendar-grid');
+    const calendarMonthLabel = document.getElementById('calendar-month-label');
+    const timeSlotsGrid = document.getElementById('time-slots-grid');
+    const wizardStepText = document.getElementById('wizard-step-text');
+
+    /* State */
+    let currentTutor = {};
+    let wizardStep = 1;
+    let selectedDate = null;
+    let selectedTime = null;
+    var _now = new Date();
+    let calendarYear = _now.getFullYear();
+    let calendarMonth = _now.getMonth();
+
+    /* Generate dynamic availability for any month */
+    function generateAvailData(year, month) {
+      var daysInMonth = new Date(year, month + 1, 0).getDate();
+      var today = new Date();
+      var data = {};
+      for (var d = 1; d <= daysInMonth; d++) {
+        var date = new Date(year, month, d);
+        var dow = date.getDay();
+        if (date < new Date(today.getFullYear(), today.getMonth(), today.getDate())) {
+          data[d] = 'unavailable';
+        } else if (dow === 0 || dow === 6) {
+          data[d] = 'unavailable';
+        } else if (d % 7 === 0) {
+          data[d] = 'limited';
+        } else {
+          data[d] = 'available';
+        }
+      }
+      return data;
+    }
+    var availabilityData = generateAvailData(calendarYear, calendarMonth);
+
+    /* Time slot data */
+    const timeSlotsData = [
+      { time: '9:00 AM', available: true },
+      { time: '10:00 AM', available: true },
+      { time: '11:00 AM', available: false },
+      { time: '1:00 PM', available: false },
+      { time: '2:00 PM', available: true },
+      { time: '3:00 PM', available: true },
+      { time: '4:00 PM', available: true }
+    ];
+
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                         'July', 'August', 'September', 'October', 'November', 'December'];
+    const dayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    /* ---- Build Mini Calendar ---- */
+    function buildCalendar() {
+      const year = calendarYear;
+      const month = calendarMonth;
+      availabilityData = generateAvailData(year, month);
+      calendarMonthLabel.textContent = monthNames[month] + ' ' + year;
+
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const today = new Date();
+      const todayDate = today.getDate();
+      const todayMonth = today.getMonth();
+      const todayYear = today.getFullYear();
+
+      let html = '';
+
+      /* Day labels */
+      dayLabels.forEach(function(d) {
+        html += '<div class="mini-calendar-day-label">' + d + '</div>';
+      });
+
+      /* Empty cells before first day */
+      for (let i = 0; i < firstDay; i++) {
+        html += '<div class="mini-calendar-day empty"></div>';
+      }
+
+      /* Day cells */
+      for (let day = 1; day <= daysInMonth; day++) {
+        const avail = availabilityData[day] || 'unavailable';
+        const isToday = (day === todayDate && month === todayMonth && year === todayYear);
+        const isPast = new Date(year, month, day) < new Date(todayYear, todayMonth, todayDate);
+        const isUnavailable = avail === 'unavailable' || isPast;
+        const isSelected = selectedDate && selectedDate.day === day && selectedDate.month === month && selectedDate.year === year;
+
+        let classes = 'mini-calendar-day';
+        if (isToday) classes += ' today';
+        if (isUnavailable) classes += ' unavailable';
+        if (isSelected) classes += ' selected';
+
+        let dotClass = '';
+        if (!isUnavailable) {
+          if (avail === 'available') dotClass = 'green';
+          else if (avail === 'limited') dotClass = 'yellow';
+        }
+
+        html += '<div class="' + classes + '" data-day="' + day + '">';
+        html += day;
+        if (dotClass && !isUnavailable) {
+          html += '<span class="cal-dot ' + dotClass + '"></span>';
+        }
+        html += '</div>';
+      }
+
+      calendarGrid.innerHTML = html;
+
+      /* Bind click events */
+      calendarGrid.querySelectorAll('.mini-calendar-day:not(.unavailable):not(.empty)').forEach(function(cell) {
+        cell.addEventListener('click', function() {
+          const day = parseInt(this.dataset.day);
+          selectedDate = { day: day, month: calendarMonth, year: calendarYear };
+          buildCalendar(); /* Re-render to show selection */
+          document.getElementById('step1-next').disabled = false;
+        });
+      });
+    }
+
+    /* ---- Build Time Slots ---- */
+    function buildTimeSlots() {
+      let html = '';
+      timeSlotsData.forEach(function(slot) {
+        const classes = 'time-slot' + (slot.available ? '' : ' unavailable') +
+                        (selectedTime === slot.time ? ' selected' : '');
+        html += '<button class="' + classes + '" type="button" data-time="' + slot.time + '"' +
+                (slot.available ? '' : ' disabled') + '>' + slot.time + '</button>';
+      });
+      timeSlotsGrid.innerHTML = html;
+
+      /* Bind click events */
+      timeSlotsGrid.querySelectorAll('.time-slot:not(.unavailable)').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          timeSlotsGrid.querySelectorAll('.time-slot').forEach(function(s) { s.classList.remove('selected'); });
+          this.classList.add('selected');
+          selectedTime = this.dataset.time;
+          document.getElementById('step2-next').disabled = false;
+        });
+      });
+    }
+
+    /* ---- Navigate Steps ---- */
+    function goToStep(step) {
+      wizardStep = step;
+
+      /* Update step dots */
+      document.querySelectorAll('.wizard-step-dot').forEach(function(dot) {
+        const s = parseInt(dot.dataset.step);
+        dot.classList.remove('active', 'completed');
+        if (s === step) dot.classList.add('active');
+        else if (s < step) dot.classList.add('completed');
+      });
+
+      /* Update step lines */
+      document.querySelectorAll('.wizard-step-line').forEach(function(line) {
+        const l = parseInt(line.dataset.line);
+        line.classList.toggle('completed', l < step);
+      });
+
+      /* Update step label */
+      var labels = {
+        1: 'Step 1 of 3 — Pick a Date',
+        2: 'Step 2 of 3 — Pick a Time',
+        3: 'Step 3 of 3 — Summary & Confirm'
+      };
+      wizardStepText.textContent = labels[step];
+
+      /* Show/hide step content */
+      document.querySelectorAll('.wizard-step-content').forEach(function(el) { el.classList.remove('active'); });
+      var stepEl = document.getElementById('wizard-step-' + step);
+      /* Force re-animation */
+      stepEl.style.animation = 'none';
+      stepEl.offsetHeight; /* trigger reflow */
+      stepEl.style.animation = '';
+      stepEl.classList.add('active');
+
+      /* Step-specific setup */
+      if (step === 2) {
+        var dateStr = formatDate(selectedDate);
+        document.getElementById('step2-selected-date').textContent = dateStr;
+        selectedTime = null;
+        document.getElementById('step2-next').disabled = true;
+        buildTimeSlots();
+      }
+
+      if (step === 3) {
+        document.getElementById('summary-avatar').textContent = currentTutor.initials;
+        document.getElementById('summary-tutor-name').textContent = currentTutor.name;
+        document.getElementById('summary-tutor-spec').textContent = currentTutor.title + ' at ' + currentTutor.org;
+        document.getElementById('summary-date').textContent = formatDate(selectedDate);
+        document.getElementById('summary-time').textContent = selectedTime;
+      }
+    }
+
+    function formatDate(d) {
+      if (!d) return '';
+      return monthNames[d.month] + ' ' + d.day + ', ' + d.year;
+    }
+
+    /* ---- Open Modal ---- */
+    function openBookingModal(btn) {
+      var card = btn.closest('.tutor-card');
+      currentTutor = {
+        name: card.dataset.name,
+        initials: card.dataset.initials,
+        title: card.dataset.title,
+        org: card.dataset.org,
+        rate: card.dataset.rate
+      };
+
+      modalAvatar.textContent = currentTutor.initials;
+      modalName.textContent = currentTutor.name;
+      modalDetail.textContent = currentTutor.title + ' at ' + currentTutor.org;
+      step1TutorName.textContent = currentTutor.name;
+
+      /* Reset wizard state */
+      selectedDate = null;
+      selectedTime = null;
+      document.getElementById('step1-next').disabled = true;
+      document.getElementById('booking-notes').value = '';
+
+      /* Reset calendar to current month */
+      var _resetNow = new Date();
+      calendarYear = _resetNow.getFullYear();
+      calendarMonth = _resetNow.getMonth();
+      buildCalendar();
+
+      goToStep(1);
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    /* ---- Close Modal ---- */
+    function closeBookingModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeBookingModal);
+
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeBookingModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeBookingModal();
+      }
+    });
+
+    /* ---- Step Navigation Buttons ---- */
+    document.getElementById('step1-next').addEventListener('click', function() {
+      if (selectedDate) goToStep(2);
+    });
+
+    document.getElementById('step2-back').addEventListener('click', function() {
+      goToStep(1);
+    });
+
+    document.getElementById('step2-next').addEventListener('click', function() {
+      if (selectedTime) goToStep(3);
+    });
+
+    document.getElementById('step3-back').addEventListener('click', function() {
+      goToStep(2);
+    });
+
+    /* ---- Calendar Navigation ---- */
+    document.getElementById('cal-prev').addEventListener('click', function() {
+      calendarMonth--;
+      if (calendarMonth < 0) {
+        calendarMonth = 11;
+        calendarYear--;
+      }
+      buildCalendar();
+    });
+
+    document.getElementById('cal-next').addEventListener('click', function() {
+      calendarMonth++;
+      if (calendarMonth > 11) {
+        calendarMonth = 0;
+        calendarYear++;
+      }
+      buildCalendar();
+    });
+
+    /* ---- Confirm Booking ---- */
+    document.getElementById('confirm-booking-btn').addEventListener('click', async function() {
+      if (!selectedDate || !selectedTime) return;
+      var btn = this;
+      btn.disabled = true;
+      btn.textContent = 'Booking...';
+
+      // Compute end time (1 hr later)
+      var tp = selectedTime.match(/(\d+):(\d+)\s*(AM|PM)/i);
+      var h = parseInt(tp[1]), m = parseInt(tp[2]), ampm = tp[3].toUpperCase();
+      var h24 = ampm === 'PM' && h !== 12 ? h + 12 : (ampm === 'AM' && h === 12 ? 0 : h);
+      var endH24 = h24 + 1;
+      var endAmpm = endH24 >= 12 ? 'PM' : 'AM';
+      var endH12 = endH24 % 12 || 12;
+      var endTime = endH12 + ':' + String(m).padStart(2, '0') + ' ' + endAmpm;
+
+      var notes = document.getElementById('booking-notes') ? document.getElementById('booking-notes').value : '';
+
+      // Format date as YYYY-MM-DD string
+      var dateStr = selectedDate.year + '-' + String(selectedDate.month + 1).padStart(2, '0') + '-' + String(selectedDate.day).padStart(2, '0');
+
+      var res = await API.bookSession({
+        sessionType: 'tutoring',
+        title: 'Tutoring with ' + currentTutor.name,
+        tutorName: currentTutor.name,
+        groupName: null,
+        sessionDate: dateStr,
+        startTime: selectedTime,
+        endTime: endTime,
+        notes: notes
+      });
+
+      btn.disabled = false;
+      btn.textContent = 'Confirm Booking';
+      closeBookingModal();
+
+      if (res.error) {
+        showToast('Booking failed: ' + res.error);
+      } else {
+        showToast('Session booked with ' + currentTutor.name + '!');
+      }
+    });
+
+    /* ---- Filter Logic ---- */
+    const tutorCards = document.querySelectorAll('.tutor-card');
+    const searchInput = document.getElementById('tutor-search');
+    const specFilter = document.getElementById('specialization-filter');
+    const availFilter = document.getElementById('availability-filter');
+    const resultCount = document.getElementById('result-count');
+
+    let activeSpec = 'all';
+    let activeAvail = 'all';
+
+    function filterTutors() {
+      const query = searchInput.value.toLowerCase().trim();
+      let visible = 0;
+
+      tutorCards.forEach(card => {
+        const name = card.dataset.name.toLowerCase();
+        const specs = card.dataset.specializations;
+        const avail = card.dataset.availability;
+        const title = card.dataset.title.toLowerCase();
+        const org = card.dataset.org.toLowerCase();
+
+        const matchSearch = !query || name.includes(query) || title.includes(query) || org.includes(query) || specs.includes(query);
+        const matchSpec = activeSpec === 'all' || specs.includes(activeSpec);
+        const matchAvail = activeAvail === 'all' ||
+                           (activeAvail === 'today' && avail === 'today') ||
+                           (activeAvail === 'week' && (avail === 'today' || avail === 'week'));
+
+        if (matchSearch && matchSpec && matchAvail) {
+          card.style.display = '';
+          visible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      resultCount.textContent = visible + ' tutor' + (visible !== 1 ? 's' : '') + ' available';
+    }
+
+    searchInput.addEventListener('input', filterTutors);
+
+    specFilter.addEventListener('click', function(e) {
+      const chip = e.target.closest('.filter-chip');
+      if (!chip) return;
+      specFilter.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeSpec = chip.dataset.filter;
+      filterTutors();
+    });
+
+    availFilter.addEventListener('click', function(e) {
+      const chip = e.target.closest('.filter-chip');
+      if (!chip) return;
+      availFilter.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeAvail = chip.dataset.avail;
+      filterTutors();
+    });
+  </script>
+</body>
+</html>

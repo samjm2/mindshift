@@ -1,0 +1,2462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedule — MindShift</title>
+  <meta name="description" content="Manage your tutoring sessions and study time on MindShift. View weekly calendar, book sessions, and track upcoming events.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="../css/design-system.css">
+
+  <!-- Page-specific styles -->
+  <style>
+    /* ---- Page Header ---- */
+    .schedule-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+
+    .schedule-header-text h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--weight-bold);
+      margin-bottom: var(--space-2);
+    }
+
+    .schedule-header-text p {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      max-width: none;
+    }
+
+    .schedule-header-actions {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    /* ---- Week Navigation ---- */
+    .week-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+      flex-wrap: wrap;
+    }
+
+    .week-nav-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .week-nav-arrows {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .week-nav-arrows button {
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      transition: all var(--transition-fast);
+    }
+
+    .week-nav-arrows button:hover {
+      background: var(--color-accent-blue-light);
+      border-color: var(--color-action-blue);
+      color: var(--color-action-blue);
+    }
+
+    .week-nav-arrows button svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .week-label {
+      font-size: var(--text-md);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      min-width: 200px;
+    }
+
+    .week-nav-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    /* ---- View Toggle ---- */
+    .view-toggle {
+      display: flex;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .view-toggle-btn {
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--text-xs);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-secondary);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: var(--font-family);
+    }
+
+    .view-toggle-btn:hover {
+      color: var(--color-text-primary);
+    }
+
+    .view-toggle-btn.active {
+      background: var(--color-action-blue);
+      color: var(--color-text-inverse);
+      font-weight: var(--weight-semibold);
+    }
+
+    /* ---- Filter Chips ---- */
+    .schedule-filters {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-6);
+      flex-wrap: wrap;
+    }
+
+    .schedule-filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 6px var(--space-4);
+      font-size: var(--text-xs);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-secondary);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: var(--font-family);
+    }
+
+    .schedule-filter-chip:hover {
+      border-color: var(--color-action-blue);
+      color: var(--color-action-blue);
+      background: var(--color-accent-blue-light);
+    }
+
+    .schedule-filter-chip.active {
+      background: var(--color-action-blue);
+      color: var(--color-text-inverse);
+      border-color: var(--color-action-blue);
+    }
+
+    .schedule-filter-chip .chip-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .schedule-filter-chip.active .chip-dot {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    .chip-dot-blue { background: var(--color-action-blue); }
+    .chip-dot-yellow { background: var(--color-warning); }
+
+    /* ---- Week Calendar Grid ---- */
+    .week-calendar {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .calendar-header {
+      display: grid;
+      grid-template-columns: 64px repeat(7, 1fr);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .calendar-header-cell {
+      padding: var(--space-3) var(--space-2);
+      text-align: center;
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-left: 1px solid var(--color-border-light);
+    }
+
+    .calendar-header-cell:first-child {
+      border-left: none;
+    }
+
+    .calendar-header-cell.today {
+      background: var(--color-accent-blue-light);
+      color: var(--color-action-blue);
+    }
+
+    .calendar-header-date {
+      display: block;
+      font-size: var(--text-lg);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-primary);
+      margin-top: 2px;
+    }
+
+    .calendar-header-cell.today .calendar-header-date {
+      color: var(--color-action-blue);
+    }
+
+    .calendar-body {
+      display: grid;
+      grid-template-columns: 64px repeat(7, 1fr);
+      position: relative;
+    }
+
+    .calendar-time-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .calendar-time-slot {
+      height: 80px;
+      padding: var(--space-1) var(--space-2);
+      font-size: 11px;
+      font-weight: var(--weight-medium);
+      color: var(--color-text-tertiary);
+      text-align: right;
+      border-bottom: 1px solid var(--color-border-light);
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+    }
+
+    .calendar-day-col {
+      position: relative;
+      border-left: 1px solid var(--color-border-light);
+    }
+
+    .calendar-day-col.today {
+      background: var(--color-accent-blue-light);
+    }
+
+    .calendar-day-slot {
+      height: 80px;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .calendar-day-slot:last-child {
+      border-bottom: none;
+    }
+
+    /* ---- Calendar Event Cards ---- */
+    .cal-event {
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      min-height: 76px;
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border);
+      border-left: 4px solid var(--color-action-blue);
+      border-radius: var(--radius-sm);
+      padding: 10px;
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .cal-event:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-action-blue);
+      z-index: 5;
+    }
+
+    .cal-event-tutoring {
+      border-left-color: var(--color-action-blue);
+    }
+
+    .cal-event-group-study {
+      border-left-color: var(--color-warning);
+    }
+
+    .cal-event-title {
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      line-height: 1.35;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cal-event-meta {
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+      line-height: 1.35;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .cal-event-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      font-size: 10px;
+      font-weight: var(--weight-semibold);
+      border-radius: var(--radius-full);
+      margin-top: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .cal-event-badge-tutoring {
+      background: var(--color-accent-blue);
+      color: var(--color-deep-blue);
+    }
+
+    .cal-event-badge-group-study {
+      background: var(--color-warning-bg);
+      color: var(--color-warning);
+    }
+
+    /* ---- List View ---- */
+    .list-view {
+      display: none;
+    }
+
+    .list-view.active {
+      display: block;
+    }
+
+    .week-view.active {
+      display: block;
+    }
+
+    .list-day-group {
+      margin-bottom: var(--space-6);
+    }
+
+    .list-day-label {
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: var(--space-3);
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .list-event-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-left: 4px solid var(--color-action-blue);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4) var(--space-5);
+      margin-bottom: var(--space-3);
+      transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base), opacity 0.25s var(--ease-out), height 0.25s var(--ease-out), margin 0.25s var(--ease-out), padding 0.25s var(--ease-out);
+      cursor: pointer;
+    }
+
+    .list-event-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-action-blue);
+    }
+
+    .list-event-card.type-group-study {
+      border-left-color: var(--color-warning);
+    }
+
+    .list-event-card.type-group-study:hover {
+      border-color: var(--color-warning);
+    }
+
+    .list-event-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      flex: 1;
+      min-width: 0;
+    }
+
+    .list-event-time-block {
+      flex-shrink: 0;
+      text-align: center;
+      min-width: 56px;
+    }
+
+    .list-event-time {
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      line-height: 1.3;
+    }
+
+    .list-event-duration {
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+    }
+
+    .list-event-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .list-event-title {
+      font-size: var(--text-base);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .list-event-details {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+      flex-wrap: wrap;
+    }
+
+    .list-event-instructor {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .list-event-instructor svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .list-event-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      flex-shrink: 0;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      font-size: var(--text-xs);
+      font-weight: var(--weight-medium);
+      border-radius: var(--radius-full);
+    }
+
+    .status-badge-confirmed {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+
+    .status-badge-upcoming {
+      background: var(--color-accent-blue);
+      color: var(--color-deep-blue);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* ---- Empty State ---- */
+    .empty-state {
+      text-align: center;
+      padding: var(--space-8) var(--space-4);
+      color: var(--color-text-tertiary);
+    }
+
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      margin-bottom: var(--space-4);
+      opacity: 0.4;
+    }
+
+    .empty-state p {
+      font-size: var(--text-base);
+      margin-bottom: var(--space-2);
+    }
+
+    .empty-state .empty-sub {
+      font-size: var(--text-sm);
+    }
+
+    /* ---- Event Detail Modal ---- */
+    .event-detail-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: var(--space-5);
+    }
+
+    .event-detail-title {
+      font-size: var(--text-xl);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .event-detail-rows {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+
+    .event-detail-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .event-detail-row svg {
+      width: 16px;
+      height: 16px;
+      color: var(--color-text-tertiary);
+      flex-shrink: 0;
+    }
+
+    .event-detail-actions {
+      display: flex;
+      gap: var(--space-3);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .event-detail-actions .btn {
+      justify-content: center;
+      text-align: center;
+    }
+
+    /* ---- Booking Wizard Modal ---- */
+    .book-modal .modal {
+      max-width: 560px;
+      position: relative;
+    }
+
+    /* Step indicator */
+    .wizard-step-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-2);
+    }
+
+    .wizard-step-label {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .wizard-progress-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--color-border-light);
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-6);
+      overflow: hidden;
+    }
+
+    .wizard-progress-fill {
+      height: 100%;
+      background: var(--color-action-blue);
+      border-radius: var(--radius-full);
+      transition: width 0.4s var(--ease-out);
+    }
+
+    .wizard-title {
+      font-size: var(--text-lg);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-1);
+    }
+
+    .wizard-subtitle {
+      font-size: var(--text-sm);
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--space-5);
+    }
+
+    /* Wizard panels */
+    .wizard-panel {
+      display: none;
+    }
+
+    .wizard-panel.active {
+      display: block;
+      animation: fadeInUp 0.35s var(--ease-out) both;
+    }
+
+    /* Step 1 - Session type cards */
+    .session-type-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+
+    .session-type-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-6) var(--space-4);
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-align: center;
+    }
+
+    .session-type-card:hover {
+      border-color: var(--color-action-blue);
+      background: var(--color-accent-blue-light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .session-type-card.selected {
+      border-color: var(--color-action-blue);
+      background: var(--color-accent-blue-light);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    .session-type-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-accent-blue);
+      border-radius: var(--radius-md);
+      color: var(--color-action-blue);
+    }
+
+    .session-type-card:nth-child(2) .session-type-icon {
+      background: var(--color-warning-bg);
+      color: var(--color-warning);
+    }
+
+    .session-type-name {
+      font-size: var(--text-base);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+    }
+
+    .session-type-desc {
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+      line-height: 1.4;
+    }
+
+    /* Step 2 - Tutor / Group cards */
+    .tutor-cards, .group-cards {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .tutor-card, .group-card {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .tutor-card:hover, .group-card:hover {
+      border-color: var(--color-action-blue);
+      background: var(--color-accent-blue-light);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tutor-card.selected, .group-card.selected {
+      border-color: var(--color-action-blue);
+      background: var(--color-accent-blue-light);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    .tutor-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--color-accent-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-base);
+      font-weight: var(--weight-bold);
+      color: var(--color-action-blue);
+      flex-shrink: 0;
+    }
+
+    .tutor-info, .group-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .tutor-name, .group-name {
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+    }
+
+    .tutor-specialties, .group-time {
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+      margin-top: 2px;
+    }
+
+    .tutor-rate {
+      display: none;
+    }
+
+    .group-spots {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .group-spots-text {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-tertiary);
+    }
+
+    .group-spots-bar {
+      width: 60px;
+      height: 4px;
+      background: var(--color-border-light);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .group-spots-fill {
+      height: 100%;
+      background: var(--color-success);
+      border-radius: var(--radius-full);
+    }
+
+    .group-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      background: var(--color-warning-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-warning);
+      flex-shrink: 0;
+    }
+
+    /* Step 3 - Mini Calendar */
+    .mini-calendar {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+    }
+
+    .mini-cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-4);
+    }
+
+    .mini-cal-month {
+      font-size: var(--text-base);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+    }
+
+    .mini-cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+      text-align: center;
+    }
+
+    .mini-cal-dow {
+      font-size: 11px;
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+      padding: var(--space-2) 0;
+    }
+
+    .mini-cal-day {
+      position: relative;
+      padding: var(--space-2) 0;
+      font-size: var(--text-sm);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-primary);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      border: 2px solid transparent;
+    }
+
+    .mini-cal-day:hover:not(.disabled) {
+      background: var(--color-accent-blue-light);
+    }
+
+    .mini-cal-day.selected {
+      background: var(--color-action-blue);
+      color: var(--color-text-inverse);
+      font-weight: var(--weight-semibold);
+    }
+
+    .mini-cal-day.selected .cal-dot {
+      background: rgba(255,255,255,0.6);
+    }
+
+    .mini-cal-day.today {
+      border: 2px solid var(--color-action-blue);
+      font-weight: var(--weight-semibold);
+    }
+
+    .mini-cal-day.disabled {
+      color: var(--color-text-tertiary);
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    .mini-cal-day.empty {
+      cursor: default;
+    }
+
+    .cal-dot {
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin: 2px auto 0;
+    }
+
+    .cal-dot-green { background: var(--color-success); }
+    .cal-dot-yellow { background: var(--color-warning); }
+
+    /* Step 4 - Time slots */
+    .time-slots-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+    }
+
+    .time-slot-btn {
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: var(--font-family);
+      text-align: center;
+    }
+
+    .time-slot-btn:hover:not(.unavailable) {
+      border-color: var(--color-action-blue);
+      background: var(--color-accent-blue-light);
+      color: var(--color-action-blue);
+      transform: translateY(-1px);
+    }
+
+    .time-slot-btn.selected {
+      border-color: var(--color-action-blue);
+      background: var(--color-action-blue);
+      color: var(--color-text-inverse);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    .time-slot-btn.unavailable {
+      color: var(--color-text-tertiary);
+      background: var(--color-bg);
+      border-color: var(--color-border-light);
+      cursor: not-allowed;
+      opacity: 0.5;
+      text-decoration: line-through;
+    }
+
+    /* Step 5 - Summary */
+    .booking-summary {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-5);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .summary-row:last-child {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .summary-value {
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+    }
+
+    .summary-price {
+      display: none;
+    }
+
+    .wizard-notes-group {
+      margin-bottom: var(--space-5);
+    }
+
+    .wizard-notes-group label {
+      display: block;
+      font-size: var(--text-sm);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .wizard-notes-group .textarea {
+      width: 100%;
+      min-height: 72px;
+    }
+
+    /* Wizard navigation */
+    .wizard-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: var(--space-5);
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    .wizard-nav-left {
+      display: flex;
+    }
+
+    .wizard-nav-right {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    /* ---- Fade/Filter Animations ---- */
+    .fade-out {
+      opacity: 0 !important;
+      transform: scale(0.95) !important;
+      pointer-events: none !important;
+      height: 0 !important;
+      margin: 0 !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      border-width: 0 !important;
+      overflow: hidden;
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.35s var(--ease-out) both;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 1024px) {
+      .calendar-header,
+      .calendar-body {
+        grid-template-columns: 50px repeat(7, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .schedule-header {
+        flex-direction: column;
+        gap: var(--space-3);
+      }
+
+      .week-nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .week-view {
+        display: none !important;
+      }
+
+      .list-view {
+        display: block !important;
+      }
+
+      .view-toggle {
+        display: none;
+      }
+
+      .list-event-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .list-event-right {
+        width: 100%;
+        justify-content: space-between;
+        padding-top: var(--space-3);
+        border-top: 1px solid var(--color-border-light);
+      }
+
+      .session-type-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .time-slots-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .schedule-header-text h1 {
+        font-size: var(--text-xl);
+      }
+
+      .week-nav-left {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div id="sidebar-container"></div>
+
+  <!-- Topbar -->
+  <div id="topbar-container"></div>
+
+  <!-- Page Layout -->
+  <div class="page-layout">
+    <main class="page-content" role="main">
+
+      <!-- 1. Page Header -->
+      <header class="schedule-header" data-animate>
+        <div class="schedule-header-text">
+          <h1>Schedule</h1>
+          <p>Manage your tutoring sessions and study time</p>
+        </div>
+        <div class="schedule-header-actions">
+          <button class="btn btn-primary" id="btn-book-session">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Book Session
+          </button>
+        </div>
+      </header>
+
+      <!-- 2. Week Navigation + 3. View Toggle -->
+      <nav class="week-nav" data-animate aria-label="Week navigation">
+        <div class="week-nav-left">
+          <div class="week-nav-arrows">
+            <button id="btn-prev-week" aria-label="Previous week">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button id="btn-next-week" aria-label="Next week">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+          <span class="week-label" id="week-label"></span>
+          <button class="btn btn-sm btn-secondary" id="btn-today">Today</button>
+        </div>
+        <div class="week-nav-right">
+          <div class="view-toggle" role="tablist" aria-label="View options">
+            <button class="view-toggle-btn active" data-view="week" role="tab" aria-selected="true">Week</button>
+            <button class="view-toggle-btn" data-view="list" role="tab" aria-selected="false">List</button>
+          </div>
+        </div>
+      </nav>
+
+      <!-- 4. Filter Chips -->
+      <div class="schedule-filters" data-animate>
+        <button class="schedule-filter-chip active" data-filter="all">All</button>
+        <button class="schedule-filter-chip" data-filter="tutoring">
+          <span class="chip-dot chip-dot-blue"></span>
+          Tutoring
+        </button>
+        <button class="schedule-filter-chip" data-filter="group-study">
+          <span class="chip-dot chip-dot-yellow"></span>
+          Group Study
+        </button>
+      </div>
+
+      <!-- 5. Week Calendar View -->
+      <section class="week-view active" id="week-view" data-animate>
+        <div class="week-calendar">
+          <!-- Calendar Header Row -->
+          <div class="calendar-header">
+            <div class="calendar-header-cell">&nbsp;</div>
+            <div class="calendar-header-cell">Mon<span class="calendar-header-date">23</span></div>
+            <div class="calendar-header-cell">Tue<span class="calendar-header-date">24</span></div>
+            <div class="calendar-header-cell">Wed<span class="calendar-header-date">25</span></div>
+            <div class="calendar-header-cell">Thu<span class="calendar-header-date">26</span></div>
+            <div class="calendar-header-cell">Fri<span class="calendar-header-date">27</span></div>
+            <div class="calendar-header-cell">Sat<span class="calendar-header-date">28</span></div>
+            <div class="calendar-header-cell">Sun<span class="calendar-header-date">29</span></div>
+          </div>
+
+          <!-- Calendar Body -->
+          <div class="calendar-body">
+            <!-- Time Column -->
+            <div class="calendar-time-col">
+              <div class="calendar-time-slot">9 AM</div>
+              <div class="calendar-time-slot">10 AM</div>
+              <div class="calendar-time-slot">11 AM</div>
+              <div class="calendar-time-slot">12 PM</div>
+              <div class="calendar-time-slot">1 PM</div>
+              <div class="calendar-time-slot">2 PM</div>
+              <div class="calendar-time-slot">3 PM</div>
+              <div class="calendar-time-slot">4 PM</div>
+              <div class="calendar-time-slot">5 PM</div>
+            </div>
+
+            <!-- Monday -->
+            <div class="calendar-day-col" data-day="mon">
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+            </div>
+
+            <!-- Tuesday -->
+            <div class="calendar-day-col" data-day="tue">
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+            </div>
+
+            <!-- Wednesday -->
+            <div class="calendar-day-col" data-day="wed">
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+            </div>
+
+            <!-- Thursday -->
+            <div class="calendar-day-col" data-day="thu">
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+            </div>
+
+            <!-- Friday -->
+            <div class="calendar-day-col" data-day="fri">
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+            </div>
+
+            <!-- Saturday -->
+            <div class="calendar-day-col" data-day="sat">
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+            </div>
+
+            <!-- Sunday -->
+            <div class="calendar-day-col" data-day="sun">
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+              <div class="calendar-day-slot"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. List View -->
+      <section class="list-view" id="list-view" data-animate>
+        <div id="list-view-content">
+          <div class="empty-state" id="list-empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <p>No sessions scheduled yet</p>
+            <p class="empty-sub">Book a session to get started</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Book Session Wizard Modal -->
+  <div class="modal-overlay book-modal" id="book-modal">
+    <div class="modal" role="dialog" aria-labelledby="book-modal-title" aria-modal="true">
+      <button class="modal-close" id="book-modal-close" aria-label="Close modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <!-- Step Indicator -->
+      <div class="wizard-step-indicator">
+        <span class="wizard-step-label" id="wizard-step-label">Step 1 of 5</span>
+      </div>
+      <div class="wizard-progress-bar">
+        <div class="wizard-progress-fill" id="wizard-progress" style="width: 20%;"></div>
+      </div>
+
+      <!-- STEP 1: Choose Session Type -->
+      <div class="wizard-panel active" id="wizard-step-1">
+        <h2 class="wizard-title">Choose Session Type</h2>
+        <p class="wizard-subtitle">What kind of session would you like to book?</p>
+        <div class="session-type-cards">
+          <div class="session-type-card" data-session-type="tutoring">
+            <div class="session-type-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="session-type-name">1-on-1 Tutoring</div>
+            <div class="session-type-desc">Book a private session with an expert tutor</div>
+          </div>
+          <div class="session-type-card" data-session-type="group-study">
+            <div class="session-type-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div class="session-type-name">Group Study</div>
+            <div class="session-type-desc">Join a collaborative group study session</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: Select Tutor or Group -->
+      <div class="wizard-panel" id="wizard-step-2">
+        <h2 class="wizard-title" id="step2-title">Select a Tutor</h2>
+        <p class="wizard-subtitle" id="step2-subtitle">Choose your preferred tutor</p>
+
+        <!-- Tutor selection (shown for tutoring) -->
+        <div class="tutor-cards" id="tutor-cards">
+          <div class="tutor-card" data-tutor="Dr. Sarah Chen">
+            <div class="tutor-avatar">SC</div>
+            <div class="tutor-info">
+              <div class="tutor-name">Dr. Sarah Chen</div>
+              <div class="tutor-specialties">ML, Neural Networks</div>
+            </div>
+          </div>
+          <div class="tutor-card" data-tutor="Prof. James Liu">
+            <div class="tutor-avatar">JL</div>
+            <div class="tutor-info">
+              <div class="tutor-name">Prof. James Liu</div>
+              <div class="tutor-specialties">Python, Deep Learning</div>
+            </div>
+          </div>
+          <div class="tutor-card" data-tutor="Maria Garcia">
+            <div class="tutor-avatar">MG</div>
+            <div class="tutor-info">
+              <div class="tutor-name">Maria Garcia</div>
+              <div class="tutor-specialties">Data Viz, CV</div>
+            </div>
+          </div>
+          <div class="tutor-card" data-tutor="Dr. Aisha Patel">
+            <div class="tutor-avatar">AP</div>
+            <div class="tutor-info">
+              <div class="tutor-name">Dr. Aisha Patel</div>
+              <div class="tutor-specialties">NLP, Transformers</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Group selection (shown for group-study) -->
+        <div class="group-cards" id="group-cards" style="display:none;">
+          <div class="group-card" data-group="AI Ethics Discussion" data-group-time="Mon 10 AM">
+            <div class="group-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div class="group-info">
+              <div class="group-name">AI Ethics Discussion</div>
+              <div class="group-time">Mon 10 AM</div>
+            </div>
+            <div class="group-spots">
+              <span class="group-spots-text">4/8 spots</span>
+              <div class="group-spots-bar"><div class="group-spots-fill" style="width:50%"></div></div>
+            </div>
+          </div>
+          <div class="group-card" data-group="ML Foundations Review" data-group-time="Wed 4:30 PM">
+            <div class="group-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div class="group-info">
+              <div class="group-name">ML Foundations Review</div>
+              <div class="group-time">Wed 4:30 PM</div>
+            </div>
+            <div class="group-spots">
+              <span class="group-spots-text">3/6 spots</span>
+              <div class="group-spots-bar"><div class="group-spots-fill" style="width:50%"></div></div>
+            </div>
+          </div>
+          <div class="group-card" data-group="Python Practice Lab" data-group-time="Fri 2 PM">
+            <div class="group-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div class="group-info">
+              <div class="group-name">Python Practice Lab</div>
+              <div class="group-time">Fri 2 PM</div>
+            </div>
+            <div class="group-spots">
+              <span class="group-spots-text">5/8 spots</span>
+              <div class="group-spots-bar"><div class="group-spots-fill" style="width:62.5%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wizard-nav">
+          <div class="wizard-nav-left">
+            <button type="button" class="btn btn-secondary btn-sm" id="wizard-back-2">Back</button>
+          </div>
+          <div class="wizard-nav-right"></div>
+        </div>
+      </div>
+
+      <!-- STEP 3: Pick a Date -->
+      <div class="wizard-panel" id="wizard-step-3">
+        <h2 class="wizard-title">Pick a Date</h2>
+        <p class="wizard-subtitle">Select an available date for your session</p>
+
+        <div class="mini-calendar">
+          <div class="mini-cal-header">
+            <span class="mini-cal-month" id="mini-cal-month-label"></span>
+          </div>
+          <div class="mini-cal-grid" id="mini-cal-grid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <div class="wizard-nav">
+          <div class="wizard-nav-left">
+            <button type="button" class="btn btn-secondary btn-sm" id="wizard-back-3">Back</button>
+          </div>
+          <div class="wizard-nav-right"></div>
+        </div>
+      </div>
+
+      <!-- STEP 4: Pick a Time -->
+      <div class="wizard-panel" id="wizard-step-4">
+        <h2 class="wizard-title">Pick a Time</h2>
+        <p class="wizard-subtitle" id="step4-subtitle">Available time slots</p>
+
+        <div class="time-slots-grid" id="time-slots-grid">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="wizard-nav">
+          <div class="wizard-nav-left">
+            <button type="button" class="btn btn-secondary btn-sm" id="wizard-back-4">Back</button>
+          </div>
+          <div class="wizard-nav-right"></div>
+        </div>
+      </div>
+
+      <!-- STEP 5: Summary & Confirm -->
+      <div class="wizard-panel" id="wizard-step-5">
+        <h2 class="wizard-title">Confirm Booking</h2>
+        <p class="wizard-subtitle">Review your booking details</p>
+
+        <div class="booking-summary" id="booking-summary">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="wizard-notes-group">
+          <label for="wizard-notes">Notes <span style="color: var(--color-text-tertiary); font-weight: normal;">(optional)</span></label>
+          <textarea id="wizard-notes" class="textarea" placeholder="Any specific topics or questions..."></textarea>
+        </div>
+
+        <div class="wizard-nav">
+          <div class="wizard-nav-left">
+            <button type="button" class="btn btn-secondary btn-sm" id="wizard-back-5">Back</button>
+          </div>
+          <div class="wizard-nav-right">
+            <button type="button" class="btn btn-primary" id="wizard-confirm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+              Confirm Booking
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Event Detail Modal -->
+  <div class="modal-overlay" id="event-detail-modal">
+    <div class="modal" role="dialog" aria-labelledby="event-detail-title" aria-modal="true">
+      <button class="modal-close" id="event-detail-close" aria-label="Close modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="event-detail-header">
+        <div>
+          <h2 class="event-detail-title" id="event-detail-title"></h2>
+          <span class="badge" id="event-detail-badge"></span>
+        </div>
+      </div>
+      <div class="event-detail-rows" id="event-detail-rows"></div>
+      <div class="event-detail-actions">
+        <button class="btn btn-primary" id="event-detail-join">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M15 10l5 5-5 5"/><path d="M4 4v7a4 4 0 004 4h12"/></svg>
+          Join Session
+        </button>
+        <button class="btn btn-secondary" id="event-detail-reschedule">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Reschedule
+        </button>
+        <button class="btn btn-secondary" id="event-detail-cancel" style="color: var(--color-error);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          Cancel
+        </button>
+        <button class="btn btn-secondary" id="event-detail-dismiss">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- API client (must come before shared.js) -->
+  <script src="../js/api.js"></script>
+  <!-- Shared JS -->
+  <script src="../js/shared.js"></script>
+
+  <script>
+    /* ============================================================
+       Schedule Page -- Functional JavaScript
+       ============================================================ */
+
+    // ---- Render sidebar & topbar ----
+    document.getElementById('sidebar-container').innerHTML = renderSidebar();
+    document.getElementById('topbar-container').innerHTML = renderTopbar('Schedule');
+    initSidebar();
+
+    // ---- Event data store (populated from API) ----
+    var EVENTS = [];
+    let nextEventId = 100;
+
+    // ---- Week navigation state ----
+    let currentWeekStart = getMonday(new Date());
+
+    function getMonday(d) {
+      var date = new Date(d);
+      var day = date.getDay();
+      var diff = date.getDate() - day + (day === 0 ? -6 : 1);
+      return new Date(date.getFullYear(), date.getMonth(), diff);
+    }
+
+    const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const DAYS_SHORT = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    const DAYS_FULL = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+    const DAY_KEYS = ['mon','tue','wed','thu','fri','sat','sun'];
+
+    function formatWeekLabel(startDate) {
+      const end = new Date(startDate);
+      end.setDate(end.getDate() + 6);
+      if (startDate.getMonth() === end.getMonth()) {
+        return MONTHS[startDate.getMonth()] + ' ' + startDate.getDate() + ' - ' + end.getDate() + ', ' + startDate.getFullYear();
+      }
+      return MONTHS[startDate.getMonth()] + ' ' + startDate.getDate() + ' - ' + MONTHS[end.getMonth()] + ' ' + end.getDate() + ', ' + end.getFullYear();
+    }
+
+    function updateWeekDisplay() {
+      document.getElementById('week-label').textContent = formatWeekLabel(currentWeekStart);
+      // Update calendar header dates and today highlight
+      var today = new Date();
+      today.setHours(0,0,0,0);
+      var headerCells = document.querySelectorAll('.calendar-header-cell');
+      var dayCols = document.querySelectorAll('.calendar-day-col');
+      for (var i = 1; i <= 7; i++) {
+        var d = new Date(currentWeekStart);
+        d.setDate(d.getDate() + (i - 1));
+        var dateSpan = headerCells[i].querySelector('.calendar-header-date');
+        if (dateSpan) dateSpan.textContent = d.getDate();
+        // Update day name too
+        headerCells[i].childNodes[0].textContent = DAYS_SHORT[i - 1];
+
+        // Today highlight
+        var isToday = d.getTime() === today.getTime();
+        headerCells[i].classList.toggle('today', isToday);
+        if (dayCols[i - 1]) dayCols[i - 1].classList.toggle('today', isToday);
+      }
+      // Re-render calendar events for this week
+      renderCalendarEvents();
+    }
+
+    document.getElementById('btn-prev-week').addEventListener('click', function() {
+      currentWeekStart = new Date(currentWeekStart.getTime() - 7 * 24 * 60 * 60 * 1000);
+      updateWeekDisplay();
+    });
+
+    document.getElementById('btn-next-week').addEventListener('click', function() {
+      currentWeekStart = new Date(currentWeekStart.getTime() + 7 * 24 * 60 * 60 * 1000);
+      updateWeekDisplay();
+    });
+
+    document.getElementById('btn-today').addEventListener('click', function() {
+      currentWeekStart = getMonday(new Date());
+      updateWeekDisplay();
+    });
+
+    // ---- View Toggle ----
+    var viewBtns = document.querySelectorAll('.view-toggle-btn');
+    var weekView = document.getElementById('week-view');
+    var listView = document.getElementById('list-view');
+
+    viewBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        viewBtns.forEach(function(b) {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+
+        var view = btn.dataset.view;
+        if (view === 'week') {
+          weekView.style.display = 'block';
+          weekView.classList.add('active');
+          listView.style.display = 'none';
+          listView.classList.remove('active');
+          weekView.style.animation = 'fadeInUp 0.35s var(--ease-out) both';
+        } else {
+          weekView.style.display = 'none';
+          weekView.classList.remove('active');
+          listView.style.display = 'block';
+          listView.classList.add('active');
+          listView.style.animation = 'fadeInUp 0.35s var(--ease-out) both';
+        }
+      });
+    });
+
+    // ---- Filter Chips ----
+    var filterChips = document.querySelectorAll('.schedule-filter-chip');
+    var activeFilter = 'all';
+
+    filterChips.forEach(function(chip) {
+      chip.addEventListener('click', function() {
+        filterChips.forEach(function(c) { c.classList.remove('active'); });
+        chip.classList.add('active');
+        activeFilter = chip.dataset.filter;
+        applyFilter();
+      });
+    });
+
+    function applyFilter() {
+      // Filter calendar events
+      document.querySelectorAll('.cal-event').forEach(function(ev) {
+        var type = ev.dataset.type;
+        if (activeFilter === 'all' || type === activeFilter) {
+          ev.style.opacity = '1';
+          ev.style.transform = '';
+          ev.style.pointerEvents = '';
+          ev.style.visibility = 'visible';
+          ev.style.transition = 'opacity 0.25s var(--ease-out), transform 0.25s var(--ease-out)';
+        } else {
+          ev.style.opacity = '0';
+          ev.style.transform = 'scale(0.9)';
+          ev.style.pointerEvents = 'none';
+          ev.style.visibility = 'hidden';
+          ev.style.transition = 'opacity 0.25s var(--ease-out), transform 0.25s var(--ease-out), visibility 0.25s var(--ease-out)';
+        }
+      });
+
+      // Filter list events
+      document.querySelectorAll('.list-event-card').forEach(function(card) {
+        var type = card.dataset.type;
+        if (activeFilter === 'all' || type === activeFilter) {
+          card.classList.remove('fade-out');
+        } else {
+          card.classList.add('fade-out');
+        }
+      });
+
+      // Hide day groups with no visible events
+      document.querySelectorAll('.list-day-group').forEach(function(group) {
+        var visibleCards = group.querySelectorAll('.list-event-card:not(.fade-out)');
+        group.style.display = visibleCards.length > 0 ? '' : 'none';
+      });
+
+      // Show/hide empty state
+      updateListEmptyState();
+    }
+
+    function updateListEmptyState() {
+      var emptyState = document.getElementById('list-empty-state');
+      var hasEvents = EVENTS.length > 0;
+      if (emptyState) {
+        emptyState.style.display = hasEvents ? 'none' : '';
+      }
+    }
+
+    // ---- Render events from EVENTS array into calendar ----
+    function renderCalendarEvents() {
+      // Clear all existing calendar events
+      document.querySelectorAll('.cal-event').forEach(function(ev) { ev.remove(); });
+
+      // Get week date range
+      var weekEnd = new Date(currentWeekStart);
+      weekEnd.setDate(weekEnd.getDate() + 6);
+
+      EVENTS.forEach(function(ev) {
+        var evDate = new Date(ev.date + 'T00:00:00');
+        if (evDate < currentWeekStart || evDate > weekEnd) return;
+
+        var dayOfWeek = evDate.getDay();
+        var dayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+        var dayKey = DAY_KEYS[dayIndex];
+
+        addEventToCalendarDOM(ev, dayKey);
+      });
+
+      applyFilter();
+    }
+
+    function addEventToCalendarDOM(ev, dayKey) {
+      var dayCol = document.querySelector('.calendar-day-col[data-day="' + dayKey + '"]');
+      if (!dayCol) return;
+
+      // Calculate top position based on time (9 AM = 0px, each hour = 60px)
+      var timeParts = ev.startTime.match(/(\d+):(\d+)\s*(AM|PM)/i);
+      if (!timeParts) return;
+      var h = parseInt(timeParts[1]);
+      var m = parseInt(timeParts[2]);
+      var ampm = timeParts[3].toUpperCase();
+      var h24 = ampm === 'PM' && h !== 12 ? h + 12 : (ampm === 'AM' && h === 12 ? 0 : h);
+      var top = (h24 - 9) * 80 + Math.round(m * 80 / 60);
+
+      // Calculate height based on duration
+      var height = 64; // default
+      if (ev.endTime) {
+        var endParts = ev.endTime.match(/(\d+):(\d+)\s*(AM|PM)/i);
+        if (endParts) {
+          var eh = parseInt(endParts[1]);
+          var em = parseInt(endParts[2]);
+          var eampm = endParts[3].toUpperCase();
+          var eh24 = eampm === 'PM' && eh !== 12 ? eh + 12 : (eampm === 'AM' && eh === 12 ? 0 : eh);
+          height = Math.max(60, (eh24 * 60 + em) - (h24 * 60 + m));
+        }
+      }
+
+      var isGroup = ev.type === 'group-study';
+      var typeClass = isGroup ? 'cal-event-group-study' : 'cal-event-tutoring';
+      var badgeClass = isGroup ? 'cal-event-badge-group-study' : 'cal-event-badge-tutoring';
+      var badgeText = isGroup ? 'Group Study' : 'Tutoring';
+      var meta = ev.instructor || (ev.startTime + ' - ' + ev.endTime);
+
+      var html = '<div class="cal-event ' + typeClass + '" data-type="' + ev.type + '" data-event-id="' + ev.id + '" style="top: ' + top + 'px; height: ' + height + 'px;">' +
+        '<div class="cal-event-title">' + ev.title + '</div>' +
+        '<div class="cal-event-meta">' + meta + '</div>' +
+        '<span class="cal-event-badge ' + badgeClass + '">' + badgeText + '</span>' +
+      '</div>';
+
+      dayCol.insertAdjacentHTML('beforeend', html);
+
+      var newCard = dayCol.querySelector('[data-event-id="' + ev.id + '"]');
+      if (newCard) {
+        newCard.addEventListener('click', function() {
+          openEventDetail(ev.id);
+        });
+      }
+    }
+
+    // ---- Render events from EVENTS array into list view ----
+    function renderListView() {
+      var container = document.getElementById('list-view-content');
+      var emptyState = document.getElementById('list-empty-state');
+
+      // Remove old day groups
+      container.querySelectorAll('.list-day-group').forEach(function(g) { g.remove(); });
+
+      if (EVENTS.length === 0) {
+        if (emptyState) emptyState.style.display = '';
+        return;
+      }
+
+      if (emptyState) emptyState.style.display = 'none';
+
+      // Sort events by date then time
+      var sorted = EVENTS.slice().sort(function(a, b) {
+        if (a.date !== b.date) return a.date < b.date ? -1 : 1;
+        return parseTimeToMinutes(a.startTime) - parseTimeToMinutes(b.startTime);
+      });
+
+      // Group by date
+      var groups = {};
+      sorted.forEach(function(ev) {
+        if (!groups[ev.date]) groups[ev.date] = [];
+        groups[ev.date].push(ev);
+      });
+
+      var html = '';
+      Object.keys(groups).sort().forEach(function(date) {
+        var evs = groups[date];
+        var dayLabel = evs[0].dayLabel;
+        html += '<div class="list-day-group">';
+        html += '<div class="list-day-label">' + dayLabel + '</div>';
+
+        evs.forEach(function(ev) {
+          var isGroupStudy = ev.type === 'group-study';
+          var typeClass = isGroupStudy ? 'type-group-study' : '';
+          var badgeClass = isGroupStudy ? 'badge-yellow' : 'badge-blue';
+          var badgeText = isGroupStudy ? 'Group Study' : 'Tutoring';
+          var statusClass = ev.status === 'Confirmed' ? 'status-badge-confirmed' : 'status-badge-upcoming';
+
+          var instructorHTML = ev.instructor
+            ? '<span class="list-event-instructor">' +
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' +
+                ev.instructor +
+              '</span>'
+            : '<span>Group session</span>';
+
+          html +=
+            '<div class="list-event-card ' + typeClass + '" data-type="' + ev.type + '" data-event-id="' + ev.id + '">' +
+              '<div class="list-event-left">' +
+                '<div class="list-event-time-block">' +
+                  '<div class="list-event-time">' + ev.startTime + '</div>' +
+                  '<div class="list-event-duration">' + ev.duration + '</div>' +
+                '</div>' +
+                '<div class="list-event-info">' +
+                  '<div class="list-event-title">' + ev.title + '</div>' +
+                  '<div class="list-event-details">' +
+                    '<span class="badge ' + badgeClass + '">' + badgeText + '</span>' +
+                    instructorHTML +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="list-event-right">' +
+                '<span class="status-badge ' + statusClass + '"><span class="status-dot"></span> ' + ev.status + '</span>' +
+                '<button class="btn btn-sm btn-primary list-join-btn">Join</button>' +
+              '</div>' +
+            '</div>';
+        });
+
+        html += '</div>';
+      });
+
+      container.insertAdjacentHTML('beforeend', html);
+
+      // Stagger animations
+      container.querySelectorAll('.list-event-card').forEach(function(card, i) {
+        card.style.opacity = '0';
+        card.style.animation = 'fadeInUp 0.4s var(--ease-out) ' + (0.1 + i * 0.06) + 's both';
+      });
+
+      bindListEventHandlers();
+      applyFilter();
+    }
+
+    function parseTimeToMinutes(timeStr) {
+      var parts = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+      if (!parts) return 0;
+      var h = parseInt(parts[1]);
+      var m = parseInt(parts[2]);
+      var ampm = parts[3].toUpperCase();
+      if (ampm === 'PM' && h !== 12) h += 12;
+      if (ampm === 'AM' && h === 12) h = 0;
+      return h * 60 + m;
+    }
+
+    // ---- Booking Wizard State ----
+    var bookModal = document.getElementById('book-modal');
+    var wizardStep = 1;
+    var wizardData = {
+      sessionType: null,    // 'tutoring' or 'group-study'
+      tutor: null,          // tutor name (for tutoring)
+      tutorRate: null,      // tutor rate (for tutoring)
+      group: null,          // group name (for group-study)
+      groupTime: null,      // group time (for group-study)
+      date: null,           // selected date string
+      dateLabel: null,      // display label for date
+      time: null            // selected time string
+    };
+
+    function openBookModal() {
+      wizardStep = 1;
+      wizardData = { sessionType: null, tutor: null, tutorRate: null, group: null, groupTime: null, date: null, dateLabel: null, time: null };
+      updateWizardUI();
+      bookModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      // Reset selections
+      document.querySelectorAll('.session-type-card').forEach(function(c) { c.classList.remove('selected'); });
+      document.querySelectorAll('.tutor-card').forEach(function(c) { c.classList.remove('selected'); });
+      document.querySelectorAll('.group-card').forEach(function(c) { c.classList.remove('selected'); });
+      document.getElementById('wizard-notes').value = '';
+    }
+
+    function closeBookModal() {
+      bookModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function goToStep(step) {
+      wizardStep = step;
+      updateWizardUI();
+    }
+
+    function updateWizardUI() {
+      // Update step label and progress
+      document.getElementById('wizard-step-label').textContent = 'Step ' + wizardStep + ' of 5';
+      document.getElementById('wizard-progress').style.width = (wizardStep * 20) + '%';
+
+      // Show/hide panels
+      for (var i = 1; i <= 5; i++) {
+        var panel = document.getElementById('wizard-step-' + i);
+        if (i === wizardStep) {
+          panel.classList.add('active');
+          panel.style.animation = 'fadeInUp 0.35s var(--ease-out) both';
+        } else {
+          panel.classList.remove('active');
+        }
+      }
+
+      // Step 2: show correct sub-panel
+      if (wizardStep === 2) {
+        if (wizardData.sessionType === 'tutoring') {
+          document.getElementById('step2-title').textContent = 'Select a Tutor';
+          document.getElementById('step2-subtitle').textContent = 'Choose your preferred tutor';
+          document.getElementById('tutor-cards').style.display = '';
+          document.getElementById('group-cards').style.display = 'none';
+        } else {
+          document.getElementById('step2-title').textContent = 'Select a Group Session';
+          document.getElementById('step2-subtitle').textContent = 'Choose a group study session to join';
+          document.getElementById('tutor-cards').style.display = 'none';
+          document.getElementById('group-cards').style.display = '';
+        }
+      }
+
+      // Step 3: build calendar
+      if (wizardStep === 3) {
+        buildMiniCalendar();
+      }
+
+      // Step 4: build time slots
+      if (wizardStep === 4) {
+        buildTimeSlots();
+      }
+
+      // Step 5: build summary
+      if (wizardStep === 5) {
+        buildSummary();
+      }
+    }
+
+    // ---- Step 1: Session type selection ----
+    document.querySelectorAll('.session-type-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        document.querySelectorAll('.session-type-card').forEach(function(c) { c.classList.remove('selected'); });
+        card.classList.add('selected');
+        wizardData.sessionType = card.dataset.sessionType;
+        // Reset downstream selections
+        wizardData.tutor = null;
+        wizardData.tutorRate = null;
+        wizardData.group = null;
+        wizardData.groupTime = null;
+        wizardData.date = null;
+        wizardData.dateLabel = null;
+        wizardData.time = null;
+        document.querySelectorAll('.tutor-card').forEach(function(c) { c.classList.remove('selected'); });
+        document.querySelectorAll('.group-card').forEach(function(c) { c.classList.remove('selected'); });
+        setTimeout(function() { goToStep(2); }, 200);
+      });
+    });
+
+    // ---- Step 2: Tutor selection ----
+    document.querySelectorAll('.tutor-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        document.querySelectorAll('.tutor-card').forEach(function(c) { c.classList.remove('selected'); });
+        card.classList.add('selected');
+        wizardData.tutor = card.dataset.tutor;
+        wizardData.tutorRate = card.dataset.rate;
+        setTimeout(function() { goToStep(3); }, 200);
+      });
+    });
+
+    // ---- Step 2: Group selection ----
+    document.querySelectorAll('.group-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        document.querySelectorAll('.group-card').forEach(function(c) { c.classList.remove('selected'); });
+        card.classList.add('selected');
+        wizardData.group = card.dataset.group;
+        wizardData.groupTime = card.dataset.groupTime;
+        setTimeout(function() { goToStep(3); }, 200);
+      });
+    });
+
+    // ---- Step 3: Mini Calendar (dynamic current month) ----
+    var calNow = new Date();
+    var calYear = calNow.getFullYear();
+    var calMonth = calNow.getMonth(); // 0-indexed
+    var calToday = calNow.getDate();
+
+    function generateAvailability(year, month) {
+      var daysInMonth = new Date(year, month + 1, 0).getDate();
+      var avail = {};
+      for (var d = 1; d <= daysInMonth; d++) {
+        var date = new Date(year, month, d);
+        var dow = date.getDay();
+        if (d < calToday && month === calNow.getMonth() && year === calNow.getFullYear()) {
+          avail[d] = 'unavailable'; // past days
+        } else if (dow === 0 || dow === 6) {
+          avail[d] = 'unavailable'; // weekends
+        } else if (d % 7 === 0) {
+          avail[d] = 'limited';
+        } else {
+          avail[d] = 'available';
+        }
+      }
+      return avail;
+    }
+
+    function buildMiniCalendar() {
+      var grid = document.getElementById('mini-cal-grid');
+      grid.innerHTML = '';
+
+      var daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+      var calendarAvailability = generateAvailability(calYear, calMonth);
+
+      // Update month label
+      document.getElementById('mini-cal-month-label').textContent = MONTHS[calMonth] + ' ' + calYear;
+
+      // Day of week headers
+      var dows = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+      dows.forEach(function(d) {
+        grid.innerHTML += '<div class="mini-cal-dow">' + d + '</div>';
+      });
+
+      var firstDayOfWeek = new Date(calYear, calMonth, 1).getDay(); // 0 = Sunday
+      var emptyBefore = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
+
+      for (var e = 0; e < emptyBefore; e++) {
+        grid.innerHTML += '<div class="mini-cal-day empty"></div>';
+      }
+
+      for (var day = 1; day <= daysInMonth; day++) {
+        var avail = calendarAvailability[day] || 'unavailable';
+        var isDisabled = avail === 'unavailable';
+        var dateStr = calYear + '-' + String(calMonth + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+        var isSelected = wizardData.date === dateStr;
+        var isToday = (day === calToday && calMonth === calNow.getMonth() && calYear === calNow.getFullYear());
+        var dotHTML = '';
+
+        if (avail === 'available') {
+          dotHTML = '<span class="cal-dot cal-dot-green"></span>';
+        } else if (avail === 'limited') {
+          dotHTML = '<span class="cal-dot cal-dot-yellow"></span>';
+        }
+
+        var classes = 'mini-cal-day';
+        if (isDisabled) classes += ' disabled';
+        if (isSelected) classes += ' selected';
+        if (isToday) classes += ' today';
+
+        grid.innerHTML += '<div class="' + classes + '" data-cal-day="' + day + '">' + day + dotHTML + '</div>';
+      }
+
+      // Bind click handlers
+      grid.querySelectorAll('.mini-cal-day:not(.disabled):not(.empty)').forEach(function(dayEl) {
+        dayEl.addEventListener('click', function() {
+          var d = parseInt(dayEl.dataset.calDay);
+          wizardData.date = calYear + '-' + String(calMonth + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+          var dateObj = new Date(calYear, calMonth, d);
+          var dayOfWeek = dateObj.getDay();
+          var dayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+          wizardData.dateLabel = DAYS_FULL[dayIndex] + ', ' + MONTHS[calMonth] + ' ' + d + ', ' + calYear;
+
+          // Update selected state
+          grid.querySelectorAll('.mini-cal-day').forEach(function(el) { el.classList.remove('selected'); });
+          dayEl.classList.add('selected');
+
+          setTimeout(function() { goToStep(4); }, 200);
+        });
+      });
+    }
+
+    // ---- Step 4: Time Slots ----
+    var allTimeSlots = [
+      { time: '9:00 AM', available: true },
+      { time: '10:00 AM', available: true },
+      { time: '11:00 AM', available: false },
+      { time: '1:00 PM', available: false },
+      { time: '2:00 PM', available: true },
+      { time: '3:00 PM', available: true },
+      { time: '4:00 PM', available: true }
+    ];
+
+    function buildTimeSlots() {
+      var grid = document.getElementById('time-slots-grid');
+      grid.innerHTML = '';
+
+      if (wizardData.dateLabel) {
+        document.getElementById('step4-subtitle').textContent = 'Available slots for ' + wizardData.dateLabel;
+      }
+
+      allTimeSlots.forEach(function(slot) {
+        var classes = 'time-slot-btn';
+        if (!slot.available) classes += ' unavailable';
+        if (wizardData.time === slot.time) classes += ' selected';
+
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = classes;
+        btn.textContent = slot.time;
+        btn.dataset.time = slot.time;
+
+        if (slot.available) {
+          btn.addEventListener('click', function() {
+            grid.querySelectorAll('.time-slot-btn').forEach(function(b) { b.classList.remove('selected'); });
+            btn.classList.add('selected');
+            wizardData.time = slot.time;
+            setTimeout(function() { goToStep(5); }, 200);
+          });
+        }
+
+        grid.appendChild(btn);
+      });
+    }
+
+    // ---- Step 5: Summary ----
+    function buildSummary() {
+      var html = '';
+
+      // Session type
+      var typeLabel = wizardData.sessionType === 'tutoring' ? '1-on-1 Tutoring' : 'Group Study';
+      html += '<div class="summary-row"><span class="summary-label">Session Type</span><span class="summary-value">' + typeLabel + '</span></div>';
+
+      // Tutor or Group
+      if (wizardData.sessionType === 'tutoring') {
+        html += '<div class="summary-row"><span class="summary-label">Tutor</span><span class="summary-value">' + (wizardData.tutor || '-') + '</span></div>';
+      } else {
+        html += '<div class="summary-row"><span class="summary-label">Group Session</span><span class="summary-value">' + (wizardData.group || '-') + '</span></div>';
+      }
+
+      // Date
+      html += '<div class="summary-row"><span class="summary-label">Date</span><span class="summary-value">' + (wizardData.dateLabel || '-') + '</span></div>';
+
+      // Time
+      html += '<div class="summary-row"><span class="summary-label">Time</span><span class="summary-value">' + (wizardData.time || '-') + '</span></div>';
+
+      // Price removed — no longer shown to user
+
+      document.getElementById('booking-summary').innerHTML = html;
+    }
+
+    // ---- Wizard Back Buttons ----
+    document.getElementById('wizard-back-2').addEventListener('click', function() { goToStep(1); });
+    document.getElementById('wizard-back-3').addEventListener('click', function() { goToStep(2); });
+    document.getElementById('wizard-back-4').addEventListener('click', function() { goToStep(3); });
+    document.getElementById('wizard-back-5').addEventListener('click', function() { goToStep(4); });
+
+    // ---- Wizard Confirm ----
+    document.getElementById('wizard-confirm').addEventListener('click', async function() {
+      var notes = document.getElementById('wizard-notes').value;
+
+      // Parse date for event creation
+      var dateParts = wizardData.date.split('-');
+      var dateObj = new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1, parseInt(dateParts[2]));
+      var dayOfWeek = dateObj.getDay();
+      var dayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+      var dayKey = DAY_KEYS[dayIndex];
+
+      // Compute end time (1 hr later)
+      var startTime = wizardData.time;
+      var timeParts = startTime.match(/(\d+):(\d+)\s*(AM|PM)/i);
+      var h = parseInt(timeParts[1]);
+      var m = parseInt(timeParts[2]);
+      var ampm = timeParts[3].toUpperCase();
+      var h24 = ampm === 'PM' && h !== 12 ? h + 12 : (ampm === 'AM' && h === 12 ? 0 : h);
+      var endH24 = h24 + 1;
+      var endAmpm = endH24 >= 12 ? 'PM' : 'AM';
+      var endH12 = endH24 % 12 || 12;
+      var endTimeStr = endH12 + ':' + String(m).padStart(2, '0') + ' ' + endAmpm;
+
+      // Build title
+      var sessionTitle;
+      if (wizardData.sessionType === 'tutoring') {
+        sessionTitle = 'Tutoring with ' + wizardData.tutor;
+      } else {
+        sessionTitle = wizardData.group || 'Group Study Session';
+      }
+
+      // Call API to book session
+      var confirmBtn = document.getElementById('wizard-confirm');
+      confirmBtn.disabled = true;
+      confirmBtn.textContent = 'Booking...';
+
+      var res = await API.bookSession({
+        sessionType: wizardData.sessionType,
+        title: sessionTitle,
+        tutorName: wizardData.tutor || null,
+        groupName: wizardData.group || null,
+        sessionDate: wizardData.date,
+        startTime: wizardData.time,
+        endTime: endTimeStr,
+        notes: notes
+      });
+
+      confirmBtn.disabled = false;
+      confirmBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg> Confirm Booking';
+
+      if (res.error) {
+        showToast('Failed to book session. Please try again.');
+        return;
+      }
+
+      // Build local event object from API response
+      var saved = res.session || res;
+      var newEvent = {
+        id: saved.id || nextEventId++,
+        title: saved.title || sessionTitle,
+        type: saved.sessionType || wizardData.sessionType,
+        day: dayKey,
+        dayLabel: wizardData.dateLabel,
+        date: saved.sessionDate || wizardData.date,
+        startTime: saved.startTime || wizardData.time,
+        endTime: saved.endTime || endTimeStr,
+        duration: '1 hr',
+        instructor: saved.tutorName || (wizardData.sessionType === 'tutoring' ? wizardData.tutor : null),
+        status: saved.status || 'Upcoming',
+        notes: saved.notes || notes || 'No additional notes.'
+      };
+
+      EVENTS.push(newEvent);
+      renderListView();
+      renderCalendarEvents();
+      closeBookModal();
+      showToast('Session booked!');
+    });
+
+    // ---- Open/Close Book Modal ----
+    document.getElementById('btn-book-session').addEventListener('click', openBookModal);
+    document.getElementById('book-modal-close').addEventListener('click', closeBookModal);
+
+    bookModal.addEventListener('click', function(e) {
+      if (e.target === bookModal) closeBookModal();
+    });
+
+    // ---- Event Detail Modal ----
+    var eventDetailModal = document.getElementById('event-detail-modal');
+
+    var currentDetailEventId = null;
+
+    function openEventDetail(eventId) {
+      var ev = EVENTS.find(function(e) { return e.id === parseInt(eventId) || e.id === eventId; });
+      if (!ev) return;
+      currentDetailEventId = ev.id;
+
+      document.getElementById('event-detail-title').textContent = ev.title;
+
+      var badge = document.getElementById('event-detail-badge');
+      badge.textContent = ev.type === 'tutoring' ? 'Tutoring' : 'Group Study';
+      badge.className = 'badge ' + (ev.type === 'tutoring' ? 'badge-blue' : 'badge-yellow');
+
+      var rows = document.getElementById('event-detail-rows');
+      var instructorRow = ev.instructor
+        ? '<div class="event-detail-row">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' +
+            '<span>' + ev.instructor + '</span>' +
+          '</div>'
+        : '';
+
+      rows.innerHTML =
+        '<div class="event-detail-row">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
+          '<span>' + ev.dayLabel + '</span>' +
+        '</div>' +
+        '<div class="event-detail-row">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' +
+          '<span>' + ev.startTime + ' - ' + ev.endTime + ' (' + ev.duration + ')</span>' +
+        '</div>' +
+        instructorRow +
+        '<div class="event-detail-row">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>' +
+          '<span>' + (ev.notes || 'No additional notes.') + '</span>' +
+        '</div>' +
+        '<div class="event-detail-row">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>' +
+          '<span>Status: <strong>' + ev.status + '</strong></span>' +
+        '</div>';
+
+      eventDetailModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeEventDetail() {
+      eventDetailModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('event-detail-close').addEventListener('click', closeEventDetail);
+    document.getElementById('event-detail-dismiss').addEventListener('click', closeEventDetail);
+
+    eventDetailModal.addEventListener('click', function(e) {
+      if (e.target === eventDetailModal) closeEventDetail();
+    });
+
+    document.getElementById('event-detail-join').addEventListener('click', function() {
+      closeEventDetail();
+      showToast('Joining session...');
+    });
+
+    document.getElementById('event-detail-cancel').addEventListener('click', async function() {
+      if (!currentDetailEventId) return;
+
+      var res = await API.cancelSession(currentDetailEventId);
+      closeEventDetail();
+
+      if (res && !res.error) {
+        // Remove from local EVENTS array
+        EVENTS = EVENTS.filter(function(e) { return e.id !== currentDetailEventId; });
+        renderCalendarEvents();
+        renderListView();
+        showToast('Session cancelled.');
+      } else {
+        showToast('Failed to cancel session.');
+      }
+    });
+
+    document.getElementById('event-detail-reschedule').addEventListener('click', async function() {
+      if (!currentDetailEventId) return;
+      var ev = EVENTS.find(function(e) { return e.id === currentDetailEventId; });
+      if (!ev) return;
+
+      // Cancel the old session
+      await API.cancelSession(currentDetailEventId);
+      EVENTS = EVENTS.filter(function(e) { return e.id !== currentDetailEventId; });
+      renderCalendarEvents();
+      renderListView();
+      closeEventDetail();
+
+      // Open wizard pre-filled, skip to step 3 (pick date)
+      wizardData = {
+        sessionType: ev.type || 'tutoring',
+        tutor: ev.instructor || null,
+        tutorRate: null,
+        group: ev.type === 'group-study' ? ev.title : null,
+        groupTime: null,
+        date: null,
+        dateLabel: null,
+        time: null
+      };
+      wizardStep = 3;
+      updateWizardUI();
+      bookModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('wizard-notes').value = '';
+      showToast('Pick a new date and time for your session.');
+    });
+
+    // ---- Bind click handlers on list events ----
+    function bindListEventHandlers() {
+      document.querySelectorAll('.list-event-card').forEach(function(card) {
+        var eventId = card.dataset.eventId;
+
+        // Click on card itself (not the button) opens detail
+        card.onclick = function(e) {
+          if (e.target.closest('.list-join-btn')) return;
+          openEventDetail(eventId);
+        };
+      });
+
+      // Join buttons
+      document.querySelectorAll('.list-join-btn').forEach(function(btn) {
+        btn.onclick = function(e) {
+          e.stopPropagation();
+          showToast('Joining session...');
+        };
+      });
+    }
+
+    // ---- Keyboard: Escape closes modals ----
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        if (bookModal.classList.contains('active')) closeBookModal();
+        if (eventDetailModal.classList.contains('active')) closeEventDetail();
+      }
+    });
+
+    // ---- Helper: convert API session to local event format ----
+    function apiSessionToEvent(session) {
+      // Handle both camelCase (from local booking) and snake_case (from API/SQLite)
+      var dateStr = session.sessionDate || session.session_date || session.date;
+      var startTime = session.startTime || session.start_time || '9:00 AM';
+      var endTime = session.endTime || session.end_time || '10:00 AM';
+      var sessionType = session.sessionType || session.session_type || session.type || 'tutoring';
+      var tutorName = session.tutorName || session.tutor_name || null;
+
+      // Normalize date to YYYY-MM-DD
+      if (dateStr && dateStr.includes('T')) {
+        dateStr = dateStr.split('T')[0];
+      }
+      var dateObj = new Date(dateStr + 'T00:00:00');
+      var dayOfWeek = dateObj.getDay();
+      var dayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+      var dayKey = DAY_KEYS[dayIndex];
+
+      var month = dateObj.getMonth();
+      var dayNum = dateObj.getDate();
+      var year = dateObj.getFullYear();
+      var dayLabel = DAYS_FULL[dayIndex] + ', ' + MONTHS[month] + ' ' + dayNum + ', ' + year;
+
+      // Calculate duration
+      var duration = '1 hr';
+      if (startTime && endTime) {
+        var startMins = parseTimeToMinutes(startTime);
+        var endMins = parseTimeToMinutes(endTime);
+        var diffMins = endMins - startMins;
+        if (diffMins === 60) duration = '1 hr';
+        else if (diffMins === 90) duration = '1.5 hrs';
+        else if (diffMins === 120) duration = '2 hrs';
+        else if (diffMins > 0) duration = (diffMins / 60).toFixed(1).replace(/\.0$/, '') + ' hr' + (diffMins > 60 ? 's' : '');
+      }
+
+      return {
+        id: session.id,
+        title: session.title || 'Session',
+        type: sessionType,
+        day: dayKey,
+        dayLabel: dayLabel,
+        date: dateStr,
+        startTime: startTime,
+        endTime: endTime,
+        duration: duration,
+        instructor: tutorName,
+        status: session.status || 'Upcoming',
+        notes: session.notes || 'No additional notes.'
+      };
+    }
+
+    // ---- Page initialization: auth check + load data ----
+    (async function init() {
+      var user = await requireLogin();
+      if (!user) return;
+
+      // Load schedule from API
+      var res = await API.getSchedule();
+      if (res && !res.error) {
+        var sessions = res.sessions || res.schedule || (Array.isArray(res) ? res : []);
+        sessions.forEach(function(session) {
+          EVENTS.push(apiSessionToEvent(session));
+        });
+        // Set nextEventId beyond any loaded IDs
+        EVENTS.forEach(function(ev) {
+          if (typeof ev.id === 'number' && ev.id >= nextEventId) {
+            nextEventId = ev.id + 1;
+          }
+        });
+      }
+
+      // Render views with loaded data
+      updateWeekDisplay();
+      renderListView();
+      renderCalendarEvents();
+
+      // Stagger animations on calendar events
+      document.querySelectorAll('.cal-event').forEach(function(ev, i) {
+        ev.style.opacity = '0';
+        ev.style.animation = 'fadeInUp 0.4s var(--ease-out) ' + (0.1 + i * 0.08) + 's both';
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courses — MindShift</title>
+  <meta name="description" content="Browse and enroll in AI courses on MindShift. From beginner fundamentals to advanced deep learning, find the right course for your skill level.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="../css/design-system.css">
+
+  <!-- Page-specific styles -->
+  <style>
+    /* Page header */
+    .page-title-section {
+      margin-bottom: var(--space-8);
+    }
+
+    .page-title-section h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--weight-bold);
+      margin-bottom: var(--space-2);
+    }
+
+    .page-title-section p {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      max-width: none;
+    }
+
+    /* Continue Learning Card */
+    .continue-learning {
+      margin-bottom: var(--space-8);
+    }
+
+    .continue-learning-card {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: var(--space-8);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-left: 4px solid var(--color-action-blue);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      transition: box-shadow var(--transition-base);
+    }
+
+    .continue-learning-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .continue-left {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .continue-label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      color: var(--color-action-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .continue-label svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .continue-course-title {
+      font-size: var(--text-xl);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-primary);
+      line-height: var(--leading-tight);
+    }
+
+    .continue-module {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .continue-progress {
+      margin: var(--space-2) 0;
+    }
+
+    .continue-progress-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-2);
+    }
+
+    .continue-progress-label span {
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+      font-weight: var(--weight-medium);
+    }
+
+    .continue-progress-label strong {
+      font-size: var(--text-sm);
+      color: var(--color-action-blue);
+      font-weight: var(--weight-semibold);
+    }
+
+    .continue-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+    }
+
+    .continue-meta-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .continue-meta-item svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .continue-next {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+    }
+
+    .continue-next svg {
+      width: 14px;
+      height: 14px;
+      color: var(--color-action-blue);
+      flex-shrink: 0;
+    }
+
+    .continue-next-label {
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+      font-weight: var(--weight-medium);
+      margin-right: var(--space-1);
+    }
+
+    .continue-actions {
+      margin-top: var(--space-2);
+    }
+
+    /* Syllabus Panel */
+    .syllabus-panel {
+      border-left: 1px solid var(--color-border-light);
+      padding-left: var(--space-6);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .syllabus-title {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-3);
+    }
+
+    .syllabus-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .syllabus-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 6px var(--space-3);
+      border-radius: var(--radius-sm);
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+      transition: background var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .syllabus-item:hover {
+      background: var(--color-bg);
+    }
+
+    .syllabus-item svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .syllabus-item.completed {
+      color: var(--color-success);
+    }
+
+    .syllabus-item.completed svg {
+      color: var(--color-success);
+    }
+
+    .syllabus-item.current {
+      background: var(--color-accent-blue);
+      color: var(--color-action-blue);
+      font-weight: var(--weight-semibold);
+      border-radius: var(--radius-sm);
+    }
+
+    .syllabus-item.current svg {
+      color: var(--color-action-blue);
+    }
+
+    .syllabus-item.upcoming {
+      color: var(--color-text-tertiary);
+    }
+
+    .syllabus-item.upcoming svg {
+      opacity: 0.4;
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+      padding: var(--space-4) var(--space-5);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+    }
+
+    .filter-search {
+      position: relative;
+      flex: 0 0 260px;
+    }
+
+    .filter-search .input {
+      padding-left: var(--space-10);
+      background: var(--color-bg);
+      border-color: var(--color-border-light);
+    }
+
+    .filter-search .input:focus {
+      background: var(--color-surface);
+      border-color: var(--color-action-blue);
+    }
+
+    .filter-search svg {
+      position: absolute;
+      left: var(--space-3);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-tertiary);
+      width: 16px;
+      height: 16px;
+      pointer-events: none;
+    }
+
+    .filter-divider {
+      width: 1px;
+      height: 28px;
+      background: var(--color-border-light);
+      flex-shrink: 0;
+    }
+
+    .filter-section {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    .filter-section-label {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-right: var(--space-1);
+      flex-shrink: 0;
+    }
+
+    .sort-select {
+      appearance: none;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-full);
+      padding: 6px var(--space-8) 6px var(--space-4);
+      font-family: var(--font-family);
+      font-size: var(--text-xs);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      transition: border-color var(--transition-fast);
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    .sort-select:focus {
+      outline: none;
+      border-color: var(--color-action-blue);
+    }
+
+    [data-theme="dark"] .sort-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    }
+
+    /* Course Grid */
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+    }
+
+    /* Course Card */
+    .course-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 0;
+      overflow: hidden;
+      transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .course-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-blue);
+      border-color: var(--color-action-blue);
+    }
+
+    .course-card-accent {
+      height: 4px;
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .course-card-accent.beginner {
+      background: linear-gradient(90deg, #16A34A, #4ADE80);
+    }
+
+    .course-card-accent.intermediate {
+      background: linear-gradient(90deg, #2563EB, #60A5FA);
+    }
+
+    .course-card-accent.advanced {
+      background: linear-gradient(90deg, #D97706, #FBBF24);
+    }
+
+    .course-card-body {
+      padding: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .course-card-title {
+      font-size: var(--text-md);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+      line-height: var(--leading-snug);
+      cursor: pointer;
+      transition: color var(--transition-fast);
+    }
+
+    .course-card-title:hover {
+      color: var(--color-action-blue);
+    }
+
+    .course-card-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-normal);
+      margin-bottom: var(--space-3);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .course-card-instructor {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--space-4);
+    }
+
+    .course-card-instructor svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .course-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .course-level-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: var(--weight-semibold);
+      border-radius: var(--radius-full);
+      line-height: 1.4;
+    }
+
+    .level-beginner {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+
+    .level-intermediate {
+      background: var(--color-accent-blue);
+      color: var(--color-deep-blue);
+    }
+
+    .level-advanced {
+      background: var(--color-warning-bg);
+      color: var(--color-warning);
+    }
+
+    .course-meta-detail {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+    }
+
+    .course-meta-detail svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    .course-rating {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      margin-left: auto;
+    }
+
+    .course-rating svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    .star-filled {
+      color: #F59E0B;
+    }
+
+    .star-empty {
+      color: var(--color-border);
+    }
+
+    .course-rating-value {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      margin-left: 4px;
+    }
+
+    /* Course card footer with progress or enroll */
+    .course-card-footer {
+      padding: 0 var(--space-5) var(--space-5);
+      margin-top: auto;
+    }
+
+    .course-card-progress {
+      margin-bottom: var(--space-3);
+    }
+
+    .course-card-progress-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-1);
+    }
+
+    .course-card-progress-label span {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      font-weight: var(--weight-medium);
+    }
+
+    .course-card-progress-label strong {
+      font-size: 11px;
+      color: var(--color-action-blue);
+      font-weight: var(--weight-semibold);
+    }
+
+    .course-card-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .btn-enroll {
+      width: 100%;
+    }
+
+    .btn-enrolled {
+      width: 100%;
+      background: var(--color-success-bg);
+      color: var(--color-success);
+      border-color: transparent;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .btn-enrolled svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .btn-continue-card {
+      flex: 1;
+    }
+
+    .course-completed-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-success-bg);
+      color: var(--color-success);
+      border-radius: var(--radius-md);
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      width: 100%;
+      justify-content: center;
+    }
+
+    .course-completed-badge svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Progress bar animation on scroll */
+    .progress-bar-fill[data-width] {
+      width: 0;
+      transition: width 1s var(--ease-out);
+    }
+
+    .animate-in .progress-bar-fill[data-width] {
+      width: var(--progress-width);
+    }
+
+    /* Section header */
+    .courses-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-5);
+    }
+
+    .courses-section-header h2 {
+      font-size: var(--text-lg);
+      font-weight: var(--weight-semibold);
+    }
+
+    /* Loading state */
+    .courses-loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-12);
+      color: var(--color-text-tertiary);
+      font-size: var(--text-sm);
+    }
+
+    .courses-loading .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--color-border);
+      border-top-color: var(--color-action-blue);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-right: var(--space-3);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .courses-loaded .courses-loading {
+      display: none;
+    }
+
+    .courses-content {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .courses-loaded .courses-content {
+      opacity: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .continue-learning-card {
+        grid-template-columns: 1fr 280px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .continue-learning-card {
+        grid-template-columns: 1fr;
+      }
+
+      .syllabus-panel {
+        border-left: none;
+        border-top: 1px solid var(--color-border-light);
+        padding-left: 0;
+        padding-top: var(--space-4);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .course-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-3);
+      }
+
+      .filter-search {
+        flex: 1 1 100%;
+      }
+
+      .filter-divider {
+        display: none;
+      }
+
+      .filter-section {
+        flex-wrap: wrap;
+      }
+
+      .sort-select {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .continue-meta {
+        flex-wrap: wrap;
+        gap: var(--space-3);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .course-card-meta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .course-rating {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="sidebar-container"></div>
+  <div id="topbar-container"></div>
+
+  <div class="page-layout">
+    <main class="page-content" role="main">
+
+      <!-- Page Header -->
+      <section class="page-title-section" data-animate>
+        <h1>Courses</h1>
+        <p>Browse and enroll in AI courses for every skill level</p>
+      </section>
+
+      <!-- Loading State -->
+      <div class="courses-loading" id="courses-loading">
+        <div class="spinner"></div>
+        Loading your courses...
+      </div>
+
+      <div class="courses-content" id="courses-content">
+
+      <!-- Continue Learning (populated by JS) -->
+      <section class="continue-learning" aria-label="Continue learning" data-animate id="continue-learning-section" style="display:none;">
+        <div class="courses-section-header">
+          <h2>Continue Learning</h2>
+        </div>
+        <div class="continue-learning-card" id="continue-learning-card">
+          <!-- Populated dynamically -->
+        </div>
+      </section>
+
+      <!-- Filter Bar -->
+      <section class="filter-bar" aria-label="Course filters" data-animate>
+        <div class="filter-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" class="input" placeholder="Search courses..." aria-label="Search courses" id="course-search">
+        </div>
+
+        <div class="filter-divider"></div>
+
+        <div class="filter-section">
+          <span class="filter-section-label">Level</span>
+          <div class="filter-group" data-filter="level">
+            <button class="filter-chip active" data-value="all">All</button>
+            <button class="filter-chip" data-value="beginner">Beginner</button>
+            <button class="filter-chip" data-value="intermediate">Intermediate</button>
+            <button class="filter-chip" data-value="advanced">Advanced</button>
+          </div>
+        </div>
+
+        <div class="filter-divider"></div>
+
+        <select class="sort-select" id="course-sort" aria-label="Sort courses">
+          <option value="popular">Most Popular</option>
+          <option value="rating">Highest Rated</option>
+          <option value="newest">Newest</option>
+          <option value="hours-asc">Shortest First</option>
+          <option value="hours-desc">Longest First</option>
+        </select>
+      </section>
+
+      <!-- Course Grid -->
+      <section aria-label="Course catalog">
+        <div class="courses-section-header" data-animate>
+          <h2>All Courses</h2>
+        </div>
+
+        <div class="course-grid">
+
+          <!-- Course 1: AI Fundamentals -->
+          <article class="course-card" data-animate data-level="beginner" data-category="ml" data-course-id="ai-fundamentals" style="animation-delay: 0s;">
+            <div class="course-card-accent beginner"></div>
+            <div class="course-card-body">
+              <h3 class="course-card-title">AI Fundamentals</h3>
+              <p class="course-card-desc">Build a strong foundation in artificial intelligence concepts, history, and core principles that power modern AI systems.</p>
+              <div class="course-card-instructor">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Dr. Sarah Chen
+              </div>
+              <div class="course-card-meta">
+                <span class="course-level-badge level-beginner">Beginner</span>
+                <span class="course-meta-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                  6 modules
+                </span>
+                <span class="course-meta-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  12h
+                </span>
+                <span class="course-rating">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <span class="course-rating-value">4.8</span>
+                </span>
+              </div>
+            </div>
+            <div class="course-card-footer" id="footer-ai-fundamentals">
+              <div class="course-card-actions">
+                <a href="course-detail.html?course=ai-fundamentals" class="btn btn-primary btn-sm">Start Course</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Course 2: Machine Learning Fundamentals -->
+          <article class="course-card" data-animate data-level="intermediate" data-category="ml" data-course-id="machine-learning" style="animation-delay: 0.06s;">
+            <div class="course-card-accent intermediate"></div>
+            <div class="course-card-body">
+              <h3 class="course-card-title">Machine Learning Fundamentals</h3>
+              <p class="course-card-desc">Master core ML algorithms including regression, classification, clustering, and neural networks with hands-on projects.</p>
+              <div class="course-card-instructor">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Dr. Sarah Chen
+              </div>
+              <div class="course-card-meta">
+                <span class="course-level-badge level-intermediate">Intermediate</span>
+                <span class="course-meta-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                  8 modules
+                </span>
+                <span class="course-meta-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  24h
+                </span>
+                <span class="course-rating">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <span class="course-rating-value">4.9</span>
+                </span>
+              </div>
+            </div>
+            <div class="course-card-footer" id="footer-ml-fundamentals">
+              <div class="course-card-actions">
+                <a href="course-detail.html?course=machine-learning" class="btn btn-primary btn-sm">Start Course</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Course 3: Deep Learning -->
+          <article class="course-card" data-animate data-level="advanced" data-category="deep-learning" data-course-id="deep-learning" style="animation-delay: 0.12s;">
+            <div class="course-card-accent advanced"></div>
+            <div class="course-card-body">
+              <h3 class="course-card-title">Deep Learning</h3>
+              <p class="course-card-desc">Dive deep into neural network architectures, CNNs, RNNs, transformers, and learn to build production-grade deep learning models.</p>
+              <div class="course-card-instructor">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Prof. James Liu
+              </div>
+              <div class="course-card-meta">
+                <span class="course-level-badge level-advanced">Advanced</span>
+                <span class="course-meta-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                  10 modules
+                </span>
+                <span class="course-meta-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  32h
+                </span>
+                <span class="course-rating">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-empty"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <span class="course-rating-value">4.7</span>
+                </span>
+              </div>
+            </div>
+            <div class="course-card-footer" id="footer-deep-learning">
+              <div class="course-card-actions">
+                <a href="course-detail.html?course=deep-learning" class="btn btn-primary btn-sm">Start Course</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Course 4: Natural Language Processing -->
+          <article class="course-card" data-animate data-level="intermediate" data-category="nlp" data-course-id="nlp" style="animation-delay: 0.18s;">
+            <div class="course-card-accent intermediate"></div>
+            <div class="course-card-body">
+              <h3 class="course-card-title">Natural Language Processing</h3>
+              <p class="course-card-desc">Learn to process and understand human language with NLP techniques including tokenization, embeddings, and transformer models.</p>
+              <div class="course-card-instructor">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Dr. Aisha Patel
+              </div>
+              <div class="course-card-meta">
+                <span class="course-level-badge level-intermediate">Intermediate</span>
+                <span class="course-meta-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                  7 modules
+                </span>
+                <span class="course-meta-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  20h
+                </span>
+                <span class="course-rating">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <span class="course-rating-value">4.8</span>
+                </span>
+              </div>
+            </div>
+            <div class="course-card-footer" id="footer-nlp">
+              <div class="course-card-actions">
+                <a href="course-detail.html?course=nlp" class="btn btn-primary btn-sm">Start Course</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Course 5: Computer Vision -->
+          <article class="course-card" data-animate data-level="intermediate" data-category="cv" data-course-id="computer-vision" style="animation-delay: 0.24s;">
+            <div class="course-card-accent intermediate"></div>
+            <div class="course-card-body">
+              <h3 class="course-card-title">Computer Vision</h3>
+              <p class="course-card-desc">Explore image recognition, object detection, and visual understanding using modern convolutional and vision transformer architectures.</p>
+              <div class="course-card-instructor">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Maria Garcia
+              </div>
+              <div class="course-card-meta">
+                <span class="course-level-badge level-intermediate">Intermediate</span>
+                <span class="course-meta-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                  8 modules
+                </span>
+                <span class="course-meta-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  22h
+                </span>
+                <span class="course-rating">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-empty"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <span class="course-rating-value">4.6</span>
+                </span>
+              </div>
+            </div>
+            <div class="course-card-footer" id="footer-cv">
+              <div class="course-card-actions">
+                <a href="course-detail.html?course=computer-vision" class="btn btn-primary btn-sm">Start Course</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Course 6: AI Ethics -->
+          <article class="course-card" data-animate data-level="beginner" data-category="ethics" data-course-id="ai-ethics" style="animation-delay: 0.30s;">
+            <div class="course-card-accent beginner"></div>
+            <div class="course-card-body">
+              <h3 class="course-card-title">AI Ethics &amp; Responsible AI</h3>
+              <p class="course-card-desc">Understand the ethical implications of AI systems, learn about bias, fairness, transparency, and responsible deployment practices.</p>
+              <div class="course-card-instructor">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Dr. Michael Torres
+              </div>
+              <div class="course-card-meta">
+                <span class="course-level-badge level-beginner">Beginner</span>
+                <span class="course-meta-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                  5 modules
+                </span>
+                <span class="course-meta-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  10h
+                </span>
+                <span class="course-rating">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <span class="course-rating-value">4.9</span>
+                </span>
+              </div>
+            </div>
+            <div class="course-card-footer" id="footer-ethics">
+              <div class="course-card-actions">
+                <a href="course-detail.html?course=ai-ethics" class="btn btn-primary btn-sm">Start Course</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Course 7: Python for AI -->
+          <article class="course-card" data-animate data-level="beginner" data-category="python" data-course-id="python-for-ai" style="animation-delay: 0.36s;">
+            <div class="course-card-accent beginner"></div>
+            <div class="course-card-body">
+              <h3 class="course-card-title">Python for AI</h3>
+              <p class="course-card-desc">Learn Python programming with a focus on AI libraries including NumPy, Pandas, Scikit-learn, and TensorFlow fundamentals.</p>
+              <div class="course-card-instructor">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Prof. James Liu
+              </div>
+              <div class="course-card-meta">
+                <span class="course-level-badge level-beginner">Beginner</span>
+                <span class="course-meta-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                  6 modules
+                </span>
+                <span class="course-meta-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  15h
+                </span>
+                <span class="course-rating">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-empty"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <span class="course-rating-value">4.7</span>
+                </span>
+              </div>
+            </div>
+            <div class="course-card-footer" id="footer-python-ai">
+              <div class="course-card-actions">
+                <a href="course-detail.html?course=python-for-ai" class="btn btn-primary btn-sm">Start Course</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Course 8: Reinforcement Learning -->
+          <article class="course-card" data-animate data-level="advanced" data-category="ml" data-course-id="reinforcement-learning" style="animation-delay: 0.42s;">
+            <div class="course-card-accent advanced"></div>
+            <div class="course-card-body">
+              <h3 class="course-card-title">Reinforcement Learning</h3>
+              <p class="course-card-desc">Master RL algorithms from Q-learning to policy gradients, and build agents that learn through interaction with environments.</p>
+              <div class="course-card-instructor">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Dr. Aisha Patel
+              </div>
+              <div class="course-card-meta">
+                <span class="course-level-badge level-advanced">Advanced</span>
+                <span class="course-meta-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                  9 modules
+                </span>
+                <span class="course-meta-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  28h
+                </span>
+                <span class="course-rating">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="star-empty"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <span class="course-rating-value">4.5</span>
+                </span>
+              </div>
+            </div>
+            <div class="course-card-footer" id="footer-rl">
+              <div class="course-card-actions">
+                <a href="course-detail.html?course=reinforcement-learning" class="btn btn-primary btn-sm">Start Course</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      </div><!-- end courses-content -->
+
+    </main>
+  </div>
+
+  <!-- API client (must load before shared.js) -->
+  <script src="../js/api.js"></script>
+  <!-- Shared JS -->
+  <script src="../js/shared.js"></script>
+  <script>
+    // Render sidebar and topbar
+    document.getElementById('sidebar-container').innerHTML = renderSidebar();
+    document.getElementById('topbar-container').innerHTML = renderTopbar('Courses');
+    initSidebar();
+
+    /* ============================================================
+       Course catalog metadata (hardcoded — this IS the catalog)
+       ============================================================ */
+    const COURSE_CATALOG = {
+      'ai-fundamentals': {
+        title: 'AI Fundamentals',
+        instructor: 'Dr. Sarah Chen',
+        modules: ['Introduction to AI', 'History of AI', 'Search Algorithms', 'Knowledge Representation', 'AI Applications', 'Capstone'],
+        totalModules: 6,
+        hours: 12
+      },
+      'machine-learning': {
+        title: 'Machine Learning Fundamentals',
+        instructor: 'Dr. Sarah Chen',
+        modules: ['Introduction to ML', 'Data Preprocessing', 'Supervised Learning', 'Neural Networks', 'Deep Learning Basics', 'Model Evaluation', 'Ensemble Methods', 'Capstone Project'],
+        totalModules: 8,
+        hours: 24
+      },
+      'deep-learning': {
+        title: 'Deep Learning',
+        instructor: 'Prof. James Liu',
+        modules: ['Intro to Deep Learning', 'Activation Functions', 'CNNs', 'RNNs & LSTMs', 'Transformers', 'GANs', 'Autoencoders', 'Transfer Learning', 'Model Deployment', 'Capstone'],
+        totalModules: 10,
+        hours: 32
+      },
+      'nlp': {
+        title: 'Natural Language Processing',
+        instructor: 'Dr. Aisha Patel',
+        modules: ['Text Processing', 'Tokenization', 'Word Embeddings', 'Sequence Models', 'Attention Mechanisms', 'Transformers for NLP', 'Capstone'],
+        totalModules: 7,
+        hours: 20
+      },
+      'computer-vision': {
+        title: 'Computer Vision',
+        instructor: 'Maria Garcia',
+        modules: ['Image Basics', 'Convolutions', 'Object Detection', 'Segmentation', 'Image Generation', 'Vision Transformers', 'Video Analysis', 'Capstone'],
+        totalModules: 8,
+        hours: 22
+      },
+      'ai-ethics': {
+        title: 'AI Ethics & Responsible AI',
+        instructor: 'Dr. Michael Torres',
+        modules: ['Ethics Foundations', 'Bias in AI', 'Fairness Metrics', 'Transparency', 'Responsible Deployment'],
+        totalModules: 5,
+        hours: 10
+      },
+      'python-for-ai': {
+        title: 'Python for AI',
+        instructor: 'Prof. James Liu',
+        modules: ['Python Basics', 'NumPy', 'Pandas', 'Data Visualization', 'Scikit-learn', 'TensorFlow Intro'],
+        totalModules: 6,
+        hours: 15
+      },
+      'reinforcement-learning': {
+        title: 'Reinforcement Learning',
+        instructor: 'Dr. Aisha Patel',
+        modules: ['RL Foundations', 'Markov Processes', 'Q-Learning', 'Deep Q-Networks', 'Policy Gradients', 'Actor-Critic', 'Multi-Agent RL', 'RL Applications', 'Capstone'],
+        totalModules: 9,
+        hours: 28
+      }
+    };
+
+    /* ============================================================
+       Global enrollment state (populated from API)
+       ============================================================ */
+    let enrollmentMap = {};  // courseId -> enrollment object
+
+    /* ============================================================
+       Page initialisation
+       ============================================================ */
+    (async function initCoursesPage() {
+      const user = await requireLogin();
+      if (!user) return;
+
+      // Fetch enrollments from API
+      const res = await API.getEnrollments();
+      const enrollments = res.enrollments || res || [];
+
+      // Build a lookup map (handle both snake_case and camelCase from API)
+      if (Array.isArray(enrollments)) {
+        enrollments.forEach(e => {
+          const cid = e.course_id || e.courseId;
+          if (cid) {
+            enrollmentMap[cid] = {
+              courseId: cid,
+              status: e.status || 'active',
+              progressPercent: e.progress_percent != null ? e.progress_percent : (e.progressPercent || 0),
+              currentModule: e.current_module || e.currentModule || 1
+            };
+          }
+        });
+      }
+
+      // Apply enrollment state to every card footer
+      applyEnrollmentStateToCards();
+
+      // Build Continue Learning section
+      buildContinueLearning(enrollments);
+
+      // Show the content, hide loading
+      document.getElementById('courses-loading').style.display = 'none';
+      document.getElementById('courses-content').style.opacity = '1';
+
+      // Animate progress bars after content is visible
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          initProgressAnimations();
+        });
+      });
+
+      // Make course card titles clickable
+      document.querySelectorAll('.course-card-title').forEach(title => {
+        title.addEventListener('click', () => {
+          const card = title.closest('.course-card');
+          const courseId = card ? card.dataset.courseId : null;
+          if (courseId) {
+            window.location.href = 'course-detail.html?course=' + courseId;
+          }
+        });
+      });
+    })();
+
+    /* ============================================================
+       Apply enrollment state to card footers
+       ============================================================ */
+    function applyEnrollmentStateToCards() {
+      document.querySelectorAll('.course-card').forEach(card => {
+        const courseId = card.dataset.courseId;
+        if (!courseId) return;
+        const enrollment = enrollmentMap[courseId];
+        const footer = document.getElementById('footer-' + courseId);
+        if (!footer) return;
+
+        if (enrollment) {
+          const progress = enrollment.progressPercent || 0;
+          const status = enrollment.status || 'active';
+
+          if (status === 'completed' || progress >= 100) {
+            // Completed with trophy + restart button
+            footer.innerHTML = `
+              <div class="course-completed-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg>
+                Course Completed
+              </div>
+              <button class="btn btn-ghost btn-sm" onclick="handleRestartCourse('${courseId}')" style="margin-top:var(--space-3);width:100%;color:var(--color-text-tertiary);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+                Restart Course
+              </button>`;
+          } else {
+            // In progress
+            footer.innerHTML = `
+              <div class="course-card-progress">
+                <div class="course-card-progress-label">
+                  <span>Progress</span>
+                  <strong>${progress}%</strong>
+                </div>
+                <div class="progress-bar progress-bar-sm">
+                  <div class="progress-bar-fill" data-width="${progress}" style="--progress-width: ${progress}%; width: 0%;" role="progressbar" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" aria-label="Course progress: ${progress}%"></div>
+                </div>
+              </div>
+              <div class="course-card-actions">
+                <a href="#" class="btn btn-primary btn-sm btn-continue-card" data-course="${courseId}" onclick="handleContinueCourse(event, '${courseId}')">Continue</a>
+              </div>`;
+          }
+        } else {
+          // Not enrolled — show Start Course link
+          footer.innerHTML = `
+            <div class="course-card-actions">
+              <a href="course-detail.html?course=${courseId}" class="btn btn-primary btn-sm">Start Course</a>
+            </div>`;
+        }
+      });
+    }
+
+    /* ============================================================
+       Build Continue Learning section from API data
+       ============================================================ */
+    function buildContinueLearning(enrollments) {
+      const section = document.getElementById('continue-learning-section');
+      const card = document.getElementById('continue-learning-card');
+
+      // Find first in-progress enrollment
+      let active = null;
+      if (Array.isArray(enrollments)) {
+        active = enrollments.find(e => e.status === 'active' && (e.progressPercent || 0) > 0 && (e.progressPercent || 0) < 100);
+        // Fallback: any active enrollment
+        if (!active) {
+          active = enrollments.find(e => e.status === 'active' && (e.progressPercent || 0) < 100);
+        }
+      }
+
+      if (!active) {
+        section.style.display = 'none';
+        return;
+      }
+
+      const courseId = active.courseId;
+      const catalog = COURSE_CATALOG[courseId];
+      if (!catalog) {
+        section.style.display = 'none';
+        return;
+      }
+
+      const progress = active.progressPercent || 0;
+      const currentModuleText = active.currentModule || catalog.modules[0];
+      const completedLessons = active.completedLessons || [];
+
+      // Figure out current module index
+      let currentIdx = catalog.modules.findIndex(m => m === currentModuleText);
+      if (currentIdx < 0) currentIdx = Math.floor((progress / 100) * catalog.totalModules);
+      if (currentIdx >= catalog.totalModules) currentIdx = catalog.totalModules - 1;
+
+      const nextModule = currentIdx + 1 < catalog.totalModules ? catalog.modules[currentIdx + 1] : 'Final Review';
+
+      // Build syllabus items
+      const syllabusItems = catalog.modules.map((mod, i) => {
+        const lessonId = courseId + '-lesson-' + (i + 1);
+        const isCompleted = completedLessons.includes(lessonId) || i < currentIdx;
+        const isCurrent = i === currentIdx;
+
+        if (isCompleted) {
+          return `<li class="syllabus-item completed" data-course="${courseId}" data-lesson="${lessonId}" onclick="handleLessonClick('${courseId}', '${lessonId}', this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>${mod}</span>
+          </li>`;
+        } else if (isCurrent) {
+          return `<li class="syllabus-item current" data-course="${courseId}" data-lesson="${lessonId}" onclick="handleLessonClick('${courseId}', '${lessonId}', this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span>${mod}</span>
+          </li>`;
+        } else {
+          return `<li class="syllabus-item upcoming" data-course="${courseId}" data-lesson="${lessonId}" onclick="handleLessonClick('${courseId}', '${lessonId}', this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
+            <span>${mod}</span>
+          </li>`;
+        }
+      }).join('');
+
+      card.innerHTML = `
+        <div class="continue-left">
+          <div class="continue-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            In Progress
+          </div>
+          <h3 class="continue-course-title">${catalog.title}</h3>
+          <p class="continue-module">Module ${currentIdx + 1} of ${catalog.totalModules}: ${currentModuleText}</p>
+
+          <div class="continue-progress">
+            <div class="continue-progress-label">
+              <span>Overall Progress</span>
+              <strong id="continue-progress-pct">${progress}%</strong>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-bar-fill" id="continue-progress-bar" data-width="${progress}" style="--progress-width: ${progress}%; width: 0%;" role="progressbar" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" aria-label="Course progress: ${progress}%"></div>
+            </div>
+          </div>
+
+          <div class="continue-meta">
+            <span class="continue-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              ${catalog.instructor}
+            </span>
+            <span class="continue-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+              ${catalog.totalModules} Modules
+            </span>
+            <span class="continue-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              ${catalog.hours} Hours
+            </span>
+          </div>
+
+          <div class="continue-next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            <span class="continue-next-label">Next:</span>
+            ${nextModule}
+          </div>
+
+          <div class="continue-actions">
+            <a href="#" class="btn btn-primary" onclick="handleContinueCourse(event, '${courseId}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Continue
+            </a>
+          </div>
+        </div>
+
+        <!-- Syllabus -->
+        <div class="syllabus-panel">
+          <div class="syllabus-title">Course Syllabus</div>
+          <ol class="syllabus-list" id="continue-syllabus">
+            ${syllabusItems}
+          </ol>
+        </div>`;
+
+      section.style.display = '';
+    }
+
+    /* ============================================================
+       Enroll handler (API-backed)
+       ============================================================ */
+    async function handleEnroll(btn, courseId) {
+      btn.disabled = true;
+      btn.textContent = 'Enrolling...';
+
+      const res = await API.enroll(courseId);
+
+      if (res.error) {
+        btn.disabled = false;
+        btn.textContent = 'Enroll';
+        showToast('Failed to enroll. Please try again.');
+        return;
+      }
+
+      // Update local state
+      enrollmentMap[courseId] = res.enrollment || { courseId, status: 'active', progressPercent: 0 };
+
+      // Update button to enrolled state
+      btn.classList.remove('btn-secondary', 'btn-enroll');
+      btn.classList.add('btn-enrolled');
+      btn.disabled = false;
+      btn.removeAttribute('onclick');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="20 6 9 17 4 12"/></svg> Enrolled';
+
+      showToast('Successfully enrolled!');
+
+      // Show achievement toasts if any
+      if (res.newAchievements && Array.isArray(res.newAchievements)) {
+        res.newAchievements.forEach((ach, i) => {
+          setTimeout(() => {
+            showToast(ach.title ? `Achievement unlocked: ${ach.title} (+${ach.xp || 0} XP)` : `New achievement! +${ach.xp || 0} XP`);
+          }, (i + 1) * 1500);
+        });
+      } else if (res.xpEarned) {
+        setTimeout(() => showToast(`+${res.xpEarned} XP earned!`), 1000);
+      }
+    }
+
+    /* ============================================================
+       Continue Course handler
+       ============================================================ */
+    async function handleRestartCourse(courseId) {
+      var res = await API.restartCourse(courseId);
+      if (res && !res.error) {
+        enrollmentMap[courseId] = { courseId: courseId, status: 'enrolled', progressPercent: 0, currentModule: 1 };
+        applyEnrollmentStateToCards();
+        showToast('Course restarted. Progress has been reset.');
+      } else {
+        showToast('Failed to restart course.');
+      }
+    }
+
+    function handleContinueCourse(event, courseId) {
+      event.preventDefault();
+      window.location.href = 'course-detail.html?course=' + courseId;
+    }
+
+    /* ============================================================
+       Lesson click handler
+       ============================================================ */
+    async function handleLessonClick(courseId, lessonId, el) {
+      // If already completed, do nothing
+      if (el && el.classList.contains('completed')) return;
+      await handleLessonComplete(courseId, lessonId);
+    }
+
+    /* ============================================================
+       Complete a lesson via API
+       ============================================================ */
+    async function handleLessonComplete(courseId, lessonId) {
+      const res = await API.completeLesson(courseId, lessonId);
+
+      if (res.error) {
+        showToast('Failed to complete lesson. Please try again.');
+        return;
+      }
+
+      // Show XP toast
+      if (res.xpEarned) {
+        showToast(`+${res.xpEarned} XP earned!`);
+      } else {
+        showToast('Lesson completed!');
+      }
+
+      // Show achievement toasts
+      if (res.newAchievements && Array.isArray(res.newAchievements)) {
+        res.newAchievements.forEach((ach, i) => {
+          setTimeout(() => {
+            showToast(ach.title ? `Achievement unlocked: ${ach.title} (+${ach.xp || 0} XP)` : `New achievement! +${ach.xp || 0} XP`);
+          }, (i + 1) * 1500);
+        });
+      }
+
+      // Update local enrollment state
+      if (res.enrollment) {
+        enrollmentMap[courseId] = res.enrollment;
+      } else {
+        // Manually update
+        const enrollment = enrollmentMap[courseId];
+        if (enrollment) {
+          if (!enrollment.completedLessons) enrollment.completedLessons = [];
+          if (!enrollment.completedLessons.includes(lessonId)) {
+            enrollment.completedLessons.push(lessonId);
+          }
+          if (res.progressPercent !== undefined) {
+            enrollment.progressPercent = res.progressPercent;
+          }
+          if (res.currentModule !== undefined) {
+            enrollment.currentModule = res.currentModule;
+          }
+          if (res.status) {
+            enrollment.status = res.status;
+          }
+        }
+      }
+
+      // Update the syllabus item if in Continue Learning section
+      const syllabusItem = document.querySelector(`.syllabus-item[data-lesson="${lessonId}"]`);
+      if (syllabusItem) {
+        syllabusItem.classList.remove('current', 'upcoming');
+        syllabusItem.classList.add('completed');
+        syllabusItem.querySelector('svg').outerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+        // Mark next sibling as current
+        const nextItem = syllabusItem.nextElementSibling;
+        if (nextItem && nextItem.classList.contains('upcoming')) {
+          nextItem.classList.remove('upcoming');
+          nextItem.classList.add('current');
+          nextItem.querySelector('svg').outerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+        }
+      }
+
+      // Update progress bar in Continue Learning section
+      const enrollment = enrollmentMap[courseId];
+      if (enrollment) {
+        const newProgress = enrollment.progressPercent || 0;
+        const progressBar = document.getElementById('continue-progress-bar');
+        const progressPct = document.getElementById('continue-progress-pct');
+        if (progressBar) {
+          progressBar.style.width = newProgress + '%';
+          progressBar.style.setProperty('--progress-width', newProgress + '%');
+          progressBar.setAttribute('aria-valuenow', newProgress);
+          progressBar.dataset.width = newProgress;
+        }
+        if (progressPct) {
+          progressPct.textContent = newProgress + '%';
+        }
+      }
+
+      // Update the course card footer too
+      applyEnrollmentStateToCards();
+
+      // Re-animate new progress bars in cards
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          initProgressAnimations();
+        });
+      });
+    }
+
+    /* ============================================================
+       Filter Logic
+       ============================================================ */
+    function initCourseFilters() {
+      const filterGroups = document.querySelectorAll('.filter-group');
+
+      filterGroups.forEach(group => {
+        const chips = group.querySelectorAll('.filter-chip');
+        chips.forEach(chip => {
+          chip.addEventListener('click', () => {
+            // Single-select: deactivate all then activate clicked
+            chips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            applyFilters();
+          });
+        });
+      });
+
+      // Search input
+      const searchInput = document.getElementById('course-search');
+      if (searchInput) {
+        searchInput.addEventListener('input', debounce(applyFilters, 200));
+      }
+    }
+
+    function applyFilters() {
+      const levelGroup = document.querySelector('[data-filter="level"]');
+      const searchInput = document.getElementById('course-search');
+
+      const activeLevel = levelGroup ? levelGroup.querySelector('.filter-chip.active')?.dataset.value || 'all' : 'all';
+      const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+      const cards = document.querySelectorAll('.course-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const cardLevel = card.dataset.level || '';
+        const cardTitle = card.querySelector('.course-card-title')?.textContent.toLowerCase() || '';
+        const cardDesc = card.querySelector('.course-card-desc')?.textContent.toLowerCase() || '';
+        const cardInstructor = card.querySelector('.course-card-instructor')?.textContent.toLowerCase() || '';
+
+        const matchesLevel = activeLevel === 'all' || cardLevel === activeLevel;
+        const matchesSearch = !searchTerm || cardTitle.includes(searchTerm) || cardDesc.includes(searchTerm) || cardInstructor.includes(searchTerm);
+
+        if (matchesLevel && matchesSearch) {
+          card.style.display = '';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function debounce(fn, delay) {
+      let timer;
+      return function(...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn.apply(this, args), delay);
+      };
+    }
+
+    initCourseFilters();
+
+    /* ============================================================
+       Progress bar scroll animation
+       ============================================================ */
+    function initProgressAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const bars = entry.target.querySelectorAll('.progress-bar-fill[data-width]');
+            bars.forEach(bar => {
+              const width = bar.dataset.width;
+              bar.style.width = width + '%';
+            });
+          }
+        });
+      }, { threshold: 0.2 });
+
+      document.querySelectorAll('.course-card, .continue-learning-card').forEach(el => {
+        observer.observe(el);
+      });
+    }
+  </script>
+</body>
+</html>

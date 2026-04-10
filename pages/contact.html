@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — MindShift</title>
+  <meta name="description" content="Get in touch with the MindShift team. Ask questions, report bugs, request features, or share feedback.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="../css/design-system.css">
+
+  <!-- Page-specific styles -->
+  <style>
+    /* ---- Page Header ---- */
+    .contact-header {
+      margin-bottom: var(--space-8);
+    }
+
+    .contact-header h1 {
+      font-size: var(--text-3xl);
+      font-weight: var(--weight-extrabold);
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-2);
+      background: linear-gradient(135deg, var(--color-text-primary) 0%, var(--color-action-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .contact-header p {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      max-width: 560px;
+      line-height: 1.6;
+    }
+
+    /* ---- Two-Column Layout ---- */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: var(--space-6);
+      align-items: start;
+    }
+
+    /* ---- Form Card ---- */
+    .contact-form-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-form-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-action-blue), #8B5CF6);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .form-subheading {
+      font-size: var(--text-lg);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-6);
+      letter-spacing: -0.01em;
+    }
+
+    .form-group {
+      margin-bottom: var(--space-5);
+    }
+
+    .form-label {
+      display: block;
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .form-label .required {
+      color: #EF4444;
+      margin-left: 2px;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      height: 44px;
+      padding: 0 var(--space-4);
+      font-size: var(--text-sm);
+      font-family: 'Inter', sans-serif;
+      color: var(--color-text-primary);
+      background: var(--color-bg);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--color-action-blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+      background: var(--color-surface);
+    }
+
+    [data-theme="dark"] .form-input:focus,
+    [data-theme="dark"] .form-select:focus,
+    [data-theme="dark"] .form-textarea:focus {
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: var(--color-text-tertiary);
+    }
+
+    .form-input.error,
+    .form-select.error,
+    .form-textarea.error {
+      border-color: #EF4444;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%2394A3B8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right var(--space-4) center;
+      padding-right: var(--space-10);
+      cursor: pointer;
+    }
+
+    .form-textarea {
+      height: auto;
+      min-height: 120px;
+      padding: var(--space-3) var(--space-4);
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    /* ---- Drop Zone ---- */
+    .drop-zone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-6) var(--space-4);
+      border: 2px dashed var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-bg);
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+    }
+
+    .drop-zone:hover {
+      border-color: var(--color-action-blue);
+      background: var(--color-surface);
+    }
+
+    .drop-zone.drag-over {
+      border-color: var(--color-action-blue);
+      background: rgba(37, 99, 235, 0.04);
+      transform: scale(1.01);
+    }
+
+    [data-theme="dark"] .drop-zone.drag-over {
+      background: rgba(59, 130, 246, 0.08);
+    }
+
+    .drop-zone-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background: var(--color-accent-blue);
+      color: var(--color-action-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .drop-zone-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .drop-zone-text {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .drop-zone-text strong {
+      color: var(--color-action-blue);
+      font-weight: var(--weight-semibold);
+    }
+
+    .drop-zone-hint {
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+    }
+
+    /* ---- Submit Button ---- */
+    .btn-submit {
+      width: 100%;
+      height: 48px;
+      font-size: var(--text-base);
+      font-weight: var(--weight-semibold);
+      margin-top: var(--space-2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-submit.loading {
+      pointer-events: none;
+      opacity: 0.85;
+    }
+
+    @keyframes pulse-btn {
+      0%, 100% { opacity: 0.85; }
+      50% { opacity: 1; }
+    }
+
+    .btn-submit.loading {
+      animation: pulse-btn 1s ease-in-out infinite;
+    }
+
+    /* ---- Success State ---- */
+    .form-success {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-12) var(--space-6);
+      gap: var(--space-4);
+    }
+
+    .form-success.visible {
+      display: flex;
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--color-success-bg);
+      color: var(--color-success);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeScaleIn 0.4s ease both;
+    }
+
+    .success-icon svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    @keyframes fadeScaleIn {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .success-title {
+      font-size: var(--text-lg);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-primary);
+    }
+
+    .success-text {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      max-width: 320px;
+      line-height: 1.6;
+    }
+
+    .btn-send-another {
+      margin-top: var(--space-2);
+    }
+
+    /* ---- Info Cards (Right Column) ---- */
+    .info-cards {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .info-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .info-card-title {
+      font-size: var(--text-base);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-5);
+      letter-spacing: -0.01em;
+    }
+
+    /* ---- Get in Touch Card ---- */
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
+    }
+
+    .contact-item:first-of-type {
+      padding-top: 0;
+    }
+
+    .contact-item:last-of-type {
+      padding-bottom: 0;
+    }
+
+    .contact-item-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      background: var(--color-accent-blue);
+      color: var(--color-action-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-item-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .contact-item-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .contact-item-label {
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+      font-weight: var(--weight-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+    }
+
+    .contact-item-value {
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+    }
+
+    .contact-item-value a {
+      color: var(--color-action-blue);
+      text-decoration: none;
+    }
+
+    .contact-item-value a:hover {
+      text-decoration: underline;
+    }
+
+    .contact-item-note {
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+      margin-top: 2px;
+    }
+
+    /* ---- FAQ Accordion ---- */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .faq-item {
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+
+    .faq-item:hover {
+      border-color: var(--color-border);
+    }
+
+    .faq-item.active {
+      border-color: var(--color-action-blue);
+    }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: var(--text-sm);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-primary);
+      text-align: left;
+      line-height: 1.5;
+      transition: background 0.15s ease;
+    }
+
+    .faq-question:hover {
+      background: var(--color-bg);
+    }
+
+    .faq-chevron {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      color: var(--color-text-tertiary);
+      transition: transform 0.25s ease;
+    }
+
+    .faq-item.active .faq-chevron {
+      transform: rotate(180deg);
+      color: var(--color-action-blue);
+    }
+
+    .faq-answer-wrapper {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-answer {
+      padding: 0 var(--space-4) var(--space-4);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ---- Social Links ---- */
+    .social-row {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .social-link:hover {
+      background: var(--color-action-blue);
+      border-color: var(--color-action-blue);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    .social-link svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 900px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .contact-header h1 {
+        font-size: var(--text-2xl);
+      }
+
+      .contact-form-card {
+        padding: var(--space-5);
+      }
+
+      .form-success {
+        padding: var(--space-8) var(--space-4);
+      }
+    }
+
+    /* ---- Print ---- */
+    @media print {
+      .drop-zone,
+      .social-row,
+      .btn-submit { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-container"></div>
+
+  <main id="main-content" role="main">
+
+      <!-- ======================== Page Header ======================== -->
+      <section class="contact-header" data-animate aria-label="Page header">
+        <h1>Contact Us</h1>
+        <p>Have a question, found a bug, or want to share feedback? We'd love to hear from you.</p>
+      </section>
+
+      <!-- ======================== Two-Column Layout ======================== -->
+      <div class="contact-grid">
+
+        <!-- ======== Left Column: Contact Form ======== -->
+        <div class="card contact-form-card" data-animate style="animation-delay: 0.05s">
+
+          <!-- Form -->
+          <form id="contact-form" novalidate>
+            <h2 class="form-subheading">Send Us a Message</h2>
+
+            <div class="form-group">
+              <label class="form-label" for="fullName">Full Name <span class="required">*</span></label>
+              <input type="text" id="fullName" name="fullName" class="form-input" placeholder="e.g. Jordan Davis" required autocomplete="name">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="email">Email <span class="required">*</span></label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="e.g. jordan@example.com" required autocomplete="email">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="category">Category</label>
+              <select id="category" name="category" class="form-select">
+                <option value="" disabled selected>Select a category</option>
+                <option value="general">General Inquiry</option>
+                <option value="bug">Bug Report</option>
+                <option value="feature">Feature Request</option>
+                <option value="account">Account Issue</option>
+                <option value="feedback">Feedback</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="subject">Subject <span class="required">*</span></label>
+              <input type="text" id="subject" name="subject" class="form-input" placeholder="Brief description of your inquiry" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="message">Message <span class="required">*</span></label>
+              <textarea id="message" name="message" class="form-textarea" placeholder="Tell us more about your question or feedback..." rows="4" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Attachment <span style="font-weight: var(--weight-normal); color: var(--color-text-tertiary); font-size: var(--text-xs);">(optional)</span></label>
+              <div class="drop-zone" id="drop-zone" tabindex="0" role="button" aria-label="Upload file attachment">
+                <div class="drop-zone-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                </div>
+                <div class="drop-zone-text">Drag and drop files here, or <strong>click to browse</strong></div>
+                <div class="drop-zone-hint">PNG, JPG, PDF up to 10 MB</div>
+              </div>
+              <input type="file" id="file-input" hidden>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-submit" id="submit-btn">
+              <span id="btn-text">Send Message</span>
+            </button>
+          </form>
+
+          <!-- Success State -->
+          <div class="form-success" id="form-success">
+            <div class="success-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <div class="success-title">Message Sent!</div>
+            <p class="success-text">Thanks for reaching out. We'll get back to you within 24 hours.</p>
+            <button type="button" class="btn btn-primary btn-send-another" id="send-another-btn">Send Another Message</button>
+          </div>
+        </div>
+
+        <!-- ======== Right Column: Info Cards ======== -->
+        <div class="info-cards">
+
+          <!-- Card 1: Get in Touch -->
+          <div class="card info-card" data-animate style="animation-delay: 0.1s">
+            <h3 class="info-card-title">Get in Touch</h3>
+
+            <div class="contact-item">
+              <div class="contact-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
+              <div class="contact-item-content">
+                <div class="contact-item-label">Email</div>
+                <div class="contact-item-value"><a href="mailto:contact@mindshift.edu">contact@mindshift.edu</a></div>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
+              <div class="contact-item-content">
+                <div class="contact-item-label">Response Time</div>
+                <div class="contact-item-value">Within 24 hours</div>
+                <div class="contact-item-note">We typically respond within 24 hours</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Quick Help -->
+          <div class="card info-card" data-animate style="animation-delay: 0.15s">
+            <h3 class="info-card-title">Quick Help</h3>
+
+            <div class="faq-list" role="list">
+              <div class="faq-item" role="listitem">
+                <button class="faq-question" type="button" aria-expanded="false">
+                  <span>How do I reset my password?</span>
+                  <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer-wrapper">
+                  <div class="faq-answer">Visit the login page and click "Forgot password?" to receive a reset link via email.</div>
+                </div>
+              </div>
+
+              <div class="faq-item" role="listitem">
+                <button class="faq-question" type="button" aria-expanded="false">
+                  <span>How do I book a tutor session?</span>
+                  <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer-wrapper">
+                  <div class="faq-answer">Go to the Tutors page, find a tutor, and click "Book Session" to choose a time.</div>
+                </div>
+              </div>
+
+              <div class="faq-item" role="listitem">
+                <button class="faq-question" type="button" aria-expanded="false">
+                  <span>How do I track my progress?</span>
+                  <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer-wrapper">
+                  <div class="faq-answer">Your Dashboard shows all your progress, including courses, achievements, and learning time.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Follow Us -->
+          <div class="card info-card" data-animate style="animation-delay: 0.2s">
+            <h3 class="info-card-title">Follow Us</h3>
+
+            <div class="social-row">
+              <!-- Twitter / X -->
+              <a href="#" class="social-link" aria-label="Follow us on X (Twitter)">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+              <!-- LinkedIn -->
+              <a href="#" class="social-link" aria-label="Follow us on LinkedIn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+              <!-- GitHub -->
+              <a href="#" class="social-link" aria-label="Follow us on GitHub">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+  </main>
+
+  <!-- Shared JS -->
+  <script src="../js/shared.js"></script>
+  <script>
+    (function() {
+      var isApp = new URLSearchParams(window.location.search).get('app') === '1';
+      var navContainer = document.getElementById('nav-container');
+      var main = document.getElementById('main-content');
+
+      if (isApp) {
+        navContainer.innerHTML = renderSidebar() + renderTopbar('Contact Us');
+        main.className = 'page-content';
+        main.style.marginLeft = 'var(--sidebar-width)';
+        main.style.marginTop = 'var(--navbar-height)';
+        main.style.padding = 'var(--space-8) var(--space-8) var(--space-12)';
+        initSidebar();
+      } else {
+        navContainer.innerHTML =
+          '<header class="public-nav" role="banner">' +
+            '<a href="../index.html" class="nav-brand" aria-label="MindShift home">' +
+              '<img src="../assets/logo.png" alt="MindShift" style="height:34px;width:auto;">' +
+              '<span>MindShift</span>' +
+            '</a>' +
+            '<nav aria-label="Main navigation"><ul class="nav-links">' +
+              '<li><a href="about.html">About Us</a></li>' +
+              '<li><a href="contact.html">Contact Us</a></li>' +
+            '</ul></nav>' +
+            '<div class="nav-actions">' +
+              '<a href="login.html" class="btn btn-ghost">Log In</a>' +
+              '<a href="login.html" class="btn btn-primary" style="box-shadow:var(--shadow-blue);">Sign Up</a>' +
+              '<button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>' +
+            '</div>' +
+          '</header>';
+        main.className = 'container';
+        main.style.paddingTop = 'calc(var(--navbar-height) + var(--space-10))';
+        main.style.paddingBottom = 'var(--space-12)';
+      }
+    })();
+  </script>
+  <script>
+    /* ============================================================
+       Contact Form — Validation, Submission, Success State
+       ============================================================ */
+    (function() {
+      const form = document.getElementById('contact-form');
+      const submitBtn = document.getElementById('submit-btn');
+      const btnText = document.getElementById('btn-text');
+      const successEl = document.getElementById('form-success');
+      const sendAnotherBtn = document.getElementById('send-another-btn');
+      const requiredFields = form.querySelectorAll('[required]');
+
+      // Clear error state on input
+      requiredFields.forEach(field => {
+        field.addEventListener('input', () => {
+          field.classList.remove('error');
+        });
+        field.addEventListener('change', () => {
+          field.classList.remove('error');
+        });
+      });
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Validate
+        let isValid = true;
+        requiredFields.forEach(field => {
+          if (!field.value.trim()) {
+            field.classList.add('error');
+            isValid = false;
+          } else {
+            field.classList.remove('error');
+          }
+        });
+
+        // Extra email validation
+        const emailField = form.querySelector('#email');
+        if (emailField.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailField.value.trim())) {
+          emailField.classList.add('error');
+          isValid = false;
+        }
+
+        if (!isValid) {
+          // Focus first error field
+          const firstError = form.querySelector('.error');
+          if (firstError) firstError.focus();
+          return;
+        }
+
+        // Loading state
+        submitBtn.classList.add('loading');
+        btnText.textContent = 'Sending...';
+        submitBtn.disabled = true;
+
+        // Simulate send
+        setTimeout(() => {
+          submitBtn.classList.remove('loading');
+          btnText.textContent = 'Send Message';
+          submitBtn.disabled = false;
+
+          // Show success
+          form.style.display = 'none';
+          successEl.classList.add('visible');
+
+          // Toast
+          showToast("Message sent! We'll get back to you within 24 hours.", 3500);
+
+          // Reset form values
+          form.reset();
+        }, 1500);
+      });
+
+      // Send another message
+      sendAnotherBtn.addEventListener('click', function() {
+        successEl.classList.remove('visible');
+        form.style.display = 'block';
+      });
+    })();
+
+
+    /* ============================================================
+       FAQ Accordion
+       ============================================================ */
+    (function() {
+      const faqItems = document.querySelectorAll('.faq-item');
+
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const wrapper = item.querySelector('.faq-answer-wrapper');
+        const answer = item.querySelector('.faq-answer');
+
+        question.addEventListener('click', () => {
+          const isOpen = item.classList.contains('active');
+
+          // Close all
+          faqItems.forEach(other => {
+            other.classList.remove('active');
+            other.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+            other.querySelector('.faq-answer-wrapper').style.maxHeight = '0';
+          });
+
+          // Open clicked (if it was closed)
+          if (!isOpen) {
+            item.classList.add('active');
+            question.setAttribute('aria-expanded', 'true');
+            wrapper.style.maxHeight = answer.scrollHeight + 16 + 'px';
+          }
+        });
+      });
+    })();
+
+
+    /* ============================================================
+       Drop Zone — Visual Interaction
+       ============================================================ */
+    (function() {
+      const dropZone = document.getElementById('drop-zone');
+      const fileInput = document.getElementById('file-input');
+
+      dropZone.addEventListener('click', () => fileInput.click());
+      dropZone.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          fileInput.click();
+        }
+      });
+
+      dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('drag-over');
+      });
+
+      dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('drag-over');
+      });
+
+      dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('drag-over');
+        // Visual feedback only
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          const textEl = dropZone.querySelector('.drop-zone-text');
+          textEl.innerHTML = '<strong>' + files[0].name + '</strong> selected';
+          dropZone.querySelector('.drop-zone-hint').textContent = 'Click to change file';
+        }
+      });
+
+      fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+          const textEl = dropZone.querySelector('.drop-zone-text');
+          textEl.innerHTML = '<strong>' + fileInput.files[0].name + '</strong> selected';
+          dropZone.querySelector('.drop-zone-hint').textContent = 'Click to change file';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
